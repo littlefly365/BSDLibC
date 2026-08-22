@@ -31,13 +31,13 @@
 #include <stdlib.h>
 
 extern int main(int argc, char *argv[], char *envp[]);
-extern void __libc_start_main(int (*main)(int argc, char *argv[], char *envp[]), int argc, char *argv[], char *envp[]);
+extern void __libc_start_main(int (*main)(int argc, char *argv[], char *envp[]), int argc, char *argv[], char *environ[]);
 
 void
 ___start(void *stack)
 {
 	long argc = *(long*)stack;
 	char **argv = (char **)stack + 1;
-	char **envp = argv + argc + 1;
-	__libc_start_main(main, argc, argv, envp);
+	char **environ = argv + argc + 1;
+	__libc_start_main(main, argc, argv, environ);
 }

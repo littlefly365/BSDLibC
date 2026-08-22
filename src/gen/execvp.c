@@ -135,10 +135,8 @@ retry:		(void)execve(bp, argv, envp);
 			(void)execve(_PATH_BSHELL, __UNCONST(memp), envp);
 			goto done;
 		case ETXTBSY:
-#if 0
 			if (etxtbsy < 3)
 				(void)sleep(++etxtbsy);
-#endif
 			goto retry;
 		default:
 			goto done;

@@ -32,10 +32,9 @@
 
 char *__progname;
 char *__full_progname;
-char **environ;
 
 void
-__libc_start_main(int (*main)(int argc, char *argv[], char *envp[]), int argc, char *argv[], char *envp[])
+__libc_start_main(int (*main)(int argc, char *argv[], char *envp[]), int argc, char *argv[], char *environ[])
 {
 	__full_progname = argv[0];
 	__progname = strrchr(argv[0], '/');
@@ -44,6 +43,5 @@ __libc_start_main(int (*main)(int argc, char *argv[], char *envp[]), int argc, c
 	else
 		__progname++;
 
-	environ = envp;
-	exit(main(argc, argv, envp));
+	exit(main(argc, argv, environ));
 }

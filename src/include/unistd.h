@@ -2,6 +2,7 @@
 #define _UNISTD_H	1
 
 #include <sys/types.h>
+#include <time.h>
 #include <stdarg.h>
 #include <stddef.h>
 
@@ -37,6 +38,8 @@ int access(const char *path, int mode);
 int link(const char *path);
 int unlink(const char *path);
 int pipe(int fd[2]);
+int nanosleep(const struct timespec *req, struct timespec *rem);
+unsigned int sleep(unsigned int seconds);
 
 ssize_t readlink(const char *path, char *buf, size_t count);
 

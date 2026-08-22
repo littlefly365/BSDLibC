@@ -34,13 +34,8 @@
 __RCSID("$NetBSD: sleep.c,v 1.23 2012/06/25 22:32:44 abs Exp $");
 #endif /* LIBC_SCCS and not lint */
 
-#include "namespace.h"
 #include <time.h>
 #include <unistd.h>
-
-#ifdef __weak_alias
-__weak_alias(sleep,_sleep)
-#endif
 
 unsigned int
 sleep(unsigned int seconds)
