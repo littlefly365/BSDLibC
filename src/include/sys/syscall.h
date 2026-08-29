@@ -66,6 +66,7 @@
 #define SYS_geteuid            107
 #define SYS_getegid            108
 #define SYS_getppid            110
+#define SYS_getgroups          115
 #define SYS_chroot             161
 #define SYS_sync               162
 #define SYS_sethostname        170

@@ -46,6 +46,7 @@ int fchown(int fd, uid_t uid, gid_t gid);
 int dup(int fd);
 int dup2(int old, int new);
 
+int getgroups(int gidsetlen, gid_t *gidset);
 ssize_t readlink(const char *path, char *buf, size_t count);
 
 /* OpenBSD compatibility layer */
