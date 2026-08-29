@@ -32,17 +32,6 @@
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: getopt.c,v 1.2 2024/06/29 07:56:56 rin Exp $");
 
-#if defined(_KERNEL) || defined(_STANDALONE)
-
-#include <lib/libsa/stand.h>
-#include <lib/libkern/libkern.h>
-
-#define	EPRINTF(fmt, args...)	printf(fmt, ##args)
-
-#else
-
-#include "namespace.h"
-
 #include <assert.h>
 #include <errno.h>
 #include <stdio.h>
@@ -50,14 +39,8 @@ __RCSID("$NetBSD: getopt.c,v 1.2 2024/06/29 07:56:56 rin Exp $");
 #include <string.h>
 #include <unistd.h>
 
-#ifdef __weak_alias
-__weak_alias(getopt,_getopt)
-#endif
-
 #define	EPRINTF(fmt, args...)						\
-    fprintf(stderr, "%s: " fmt, getprogname(), ##args)
-
-#endif /* !_KERNEL && !_STANDALONE */
+    eprintf("%s: " fmt, getprogname(), ##args)
 
 int	opterr = 1,		/* if error message should be printed */
 	optind = 1,		/* index into parent argv vector */

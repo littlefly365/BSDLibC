@@ -72,6 +72,8 @@ int execvp(const char *name, char * const *argv);
 int execlpe(const char *name, const char *arg, ...);
 int execlp(const char *name, const char *arg, ...);
 
+int getopt(int nargc, char * const nargv[], const char *ostr);
+
 #define STDIN_FILENO  0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
