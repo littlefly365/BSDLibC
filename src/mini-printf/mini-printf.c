@@ -325,3 +325,20 @@ vfdprintf(int fd, const char *fmt, va_list va)
 make_printf(printf, STDOUT_FILENO);
 make_printf(eprintf, STDERR_FILENO);
 make_vprintf(veprintf, STDERR_FILENO);
+
+int
+fputs(const char *s, FILE *stream)
+{
+	int ret;
+	ret = write(STDOUT_FILENO, s, strlen(s));
+	return (ret > 0) ? ret : -1;
+}
+
+int
+putchar(int c)
+{
+	unsigned char ch = (unsigned char)c;
+	if (write(STDOUT_FILENO, &ch, 1) <= 0)
+		return -1;
+	return (int)ch;
+}
