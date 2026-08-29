@@ -9,6 +9,7 @@
 pid_t fork(void);
 pid_t getpid(void);
 pid_t getppid(void);
+gid_t getpgid(void);
 ssize_t write(int fd, const void *buf, size_t count);
 ssize_t read(int fd, void *buf, size_t count);
 void _exit(int exit_code);
