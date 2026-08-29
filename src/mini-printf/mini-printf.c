@@ -324,3 +324,4 @@ vfdprintf(int fd, const char *fmt, va_list va)
 
 make_printf(printf, STDOUT_FILENO);
 make_printf(eprintf, STDERR_FILENO);
+make_vprintf(veprintf, STDERR_FILENO);

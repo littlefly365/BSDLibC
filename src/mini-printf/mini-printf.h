@@ -50,6 +50,15 @@ name(const char *fmt, ...)				\
 							\
         return ret;					\
 }
+
+#define make_vprintf(name, fd)				\
+int							\
+name(const char *fmt, va_list va)			\
+{							\
+        int ret;					\
+        ret = vfdprintf(fd, fmt, va);			\
+        return ret;					\
+}
 #endif
 
 #ifdef MINI_PRINTF_ENABLE_OBJECTS
