@@ -7,4 +7,4 @@ __RCSID("$NetBSD: errno.c,v 1.6 2024/01/20 14:52:47 christos Exp $");
 
 #include <errno.h>
 
-int errno;
+int errno_value;

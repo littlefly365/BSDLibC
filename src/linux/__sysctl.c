@@ -42,6 +42,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <paths.h>
 /* machine depends headers */
 #include <machine/vmparam.h>
@@ -51,12 +52,12 @@
 #define max_size(size, max)	(((size) > (max)) ? (max) : (size))
 
 struct utsname_int {
-	char sysname[SYS_NMLN];
-	char release[SYS_NMLN];
-	char version[SYS_NMLN];
-	char nodename[SYS_NMLN];
-	char machine[SYS_NMLN]; /* We don't use this value but it's required for Linux ABI */
-	char domainname[SYS_NMLN];
+        char    sysname[_SYS_NMLN];     /* Name of this OS. */
+        char    nodename[_SYS_NMLN];    /* Name of this network node. */
+        char    release[_SYS_NMLN];     /* Release level. */
+        char    version[_SYS_NMLN];     /* Version level. */
+        char    machine[_SYS_NMLN];     /* Hardware type. */
+	char	domainname[_SYS_NMLN];
 };
 
 static struct cache {
@@ -69,8 +70,10 @@ static int hw___sysctl(const int *name, unsigned int namelen, void *oldp, size_t
 int
 __sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp, const void *newp, size_t newlen)
 {
-	if ((name + 1) == NULL || (namelen - 1) == 0)
+	if ((name + 1) == NULL || (namelen - 1) == 0) {
+		errno = EINVAL;
 		return -1;
+	}
 
 	switch (name[0]) {
 	case CTL_KERN:
@@ -81,6 +84,7 @@ __sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp, con
 		break;
 	}
 
+	errno = EINVAL;
 	return -1;
 }
 
@@ -145,14 +149,19 @@ kern___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp
 
 set:
 /* In this switch we set information of some KERN_* variables using newp and newlen */
+	long ret;
 	switch (name[0]) {
 	case KERN_HOSTNAME:
-		if (__syscall2(SYS_sethostname, newp, newlen) != 0)
+		if ((ret = __syscall2(SYS_sethostname, newp, newlen)) != 0) {
+			errno = -ret;
 			return -1;
+		}
 		break;
 	case KERN_DOMAINNAME:
-		if (__syscall2(SYS_setdomainname, newp, newlen) != 0)
+		if ((ret = __syscall2(SYS_setdomainname, newp, newlen)) != 0) {
+			errno = -ret;
 			return -1;
+		}
 		break;
 	case KERN_HOSTID:
 		int fd;
@@ -163,10 +172,11 @@ set:
 		close(fd);
 		break;
 	default:
+		errno = ENOSYS;
 		return -1;
 	}
 
-	return 0;
+	return -1;
 }
 
 static int
@@ -189,8 +199,9 @@ hw___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp, 
 		*(int*)oldp = PAGE_SIZE;
 		break;
 	default:
+		errno = ENOSYS;
 		return -1;
 	}
 
-	return 0;
+	return -1;
 }

@@ -15,6 +15,8 @@ ssize_t read(int fd, void *buf, size_t count);
 void _exit(int exit_code);
 int getdomainname(char *name, size_t namelen);
 int gethostname(char *name, size_t namelen);
+int setdomainname(const char *name, size_t namelen);
+int sethostname(const char *name, size_t namelen);
 
 #define F_OK 0
 #define R_OK 4
