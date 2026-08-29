@@ -18,7 +18,7 @@ endif
 
 CFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-stack-protector -I$(CURDIR)/include -I$(CURDIR)/arch/$(MACHINE) -I$(CURDIR)/arch/$(MACHINE)/machine
 CFLAGS+= -fPIC
-LDFLAGS+=-nostdlib -ffreestanding -fno-stack-protector -Wl,-soname,lib$(LIBNAME)$(SO_SUFFIX).$(major)
+LDFLAGS+=-nostdlib -ffreestanding -fno-stack-protector -Wl,-soname,lib$(LIBNAME)$(SO_SUFFIX).$(major) -static
 
 -include src-config.mk
 
@@ -56,4 +56,8 @@ install-includes:
 clean:
 	rm -rf $(ALL_OBJS) $(LIB_DYNAMIC) $(LIB_STATIC) $(LIB_SYMLINKS)
 	MACHINE=$(MACHINE) $(MAKE) -C crt clean
-.PHONY:
+	$(MAKE) -C tests clean
+test: all
+	$(MAKE) CFLAGS="-nostdinc -ffreestanding -I$(CURDIR)/include -I$(CURDIR)/arch/$(MACHINE) -fno-stack-protector" \
+	LDFLAGS="$(CURDIR)/crt/libc_start.o $(CURDIR)/crt/$(MACHINE)/*.o -ffreestanding -nostdlib -L$(CURDIR) -lc \
+	-static -fno-stack-protector" -C tests
