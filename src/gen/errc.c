@@ -38,15 +38,9 @@
 __RCSID("$NetBSD: errc.c,v 1.3 2014/06/06 11:38:41 joerg Exp $");
 #endif /* LIBC_SCCS and not lint */
 
-#include "namespace.h"
 #include <err.h>
 #include <stdarg.h>
 
-#ifdef __weak_alias
-__weak_alias(errc, _errc)
-#endif
-
-#if !HAVE_ERR_H || !HAVE_DECL_ERRC
 __dead void
 errc(int eval, int code, const char *fmt, ...)
 {
@@ -56,4 +50,3 @@ errc(int eval, int code, const char *fmt, ...)
 	verrc(eval, code, fmt, ap);
 	va_end(ap);
 }
-#endif

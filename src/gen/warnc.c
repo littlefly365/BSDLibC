@@ -1,4 +1,4 @@
-/*	$NetBSD: verrx.c,v 1.15 2011/07/17 20:54:34 joerg Exp $	*/
+/*	$NetBSD: warnc.c,v 1.3 2014/06/06 11:38:41 joerg Exp $	*/
 
 /*-
  * Copyright (c) 1993
@@ -38,28 +38,19 @@
 #if 0
 static char sccsid[] = "@(#)err.c	8.1 (Berkeley) 6/4/93";
 #else
-__RCSID("$NetBSD: verrx.c,v 1.15 2011/07/17 20:54:34 joerg Exp $");
+__RCSID("$NetBSD: warnc.c,v 1.3 2014/06/06 11:38:41 joerg Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
-#include "namespace.h"
 #include <err.h>
 #include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-#ifdef __weak_alias
-__weak_alias(verrx, _verrx)
-#endif
-
-#if !HAVE_ERR_H
-__dead void
-verrx(int eval, const char *fmt, va_list ap)
+void
+warnc(int code, const char *fmt, ...)
 {
-	(void)fprintf(stderr, "%s: ", getprogname());
-	if (fmt != NULL)
-		(void)vfprintf(stderr, fmt, ap);
-	(void)fprintf(stderr, "\n");
-	exit(eval);
+	va_list ap;
+
+	va_start(ap, fmt);
+	vwarnc(code, fmt, ap);
+	va_end(ap);
 }
-#endif

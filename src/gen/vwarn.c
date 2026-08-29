@@ -1,4 +1,4 @@
-/*	$NetBSD: verr.c,v 1.16 2014/01/16 17:21:38 christos Exp $	*/
+/*	$NetBSD: vwarn.c,v 1.16 2014/01/16 17:21:38 christos Exp $	*/
 
 /*-
  * Copyright (c) 2014 The NetBSD Foundation, Inc.
@@ -35,21 +35,14 @@
 
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: verr.c,v 1.16 2014/01/16 17:21:38 christos Exp $");
+__RCSID("$NetBSD: vwarn.c,v 1.16 2014/01/16 17:21:38 christos Exp $");
 #endif /* LIBC_SCCS and not lint */
 
-#include "namespace.h"
 #include <err.h>
 #include <errno.h>
 
-#ifdef __weak_alias
-__weak_alias(verr, _verr)
-#endif
-
-#if !HAVE_ERR_H
-__dead void
-verr(int eval, const char *fmt, va_list ap)
+void
+vwarn(const char *fmt, va_list ap)
 {
-	verrc(eval, errno, fmt, ap);
+	vwarnc(errno, fmt, ap);
 }
-#endif
