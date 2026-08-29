@@ -27,49 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _SYS_SYSCALLS_H
-#define _SYS_SYSCALLS_H	1
+#include <sys/syscall.h>
+#include <syscall_asm.h>
+#include <unistd.h>
 
-#if defined(__amd64__) || defined(__x86_64__)
-#define SYS_read               0
-#define SYS_write              1
-#define SYS_open               2
-#define SYS_close              3
-#define SYS_lseek              8
-#define SYS_mmap               9
-#define SYS_munmap             11
-#define SYS_brk                12
-#define SYS_access             21
-#define SYS_pipe               22
-#define SYS_madvise            28
-#define SYS_dup                32
-#define SYS_dup2               33
-#define SYS_nanosleep          35
-#define SYS_getpid             39
-#define SYS_fork               57
-#define SYS_execve             59
-#define SYS_exit               60
-#define SYS_uname              63
-#define SYS_getcwd             79
-#define SYS_chdir              80
-#define SYS_fchdir             81
-#define SYS_mkdir              83
-#define SYS_rmdir              84
-#define SYS_link               86
-#define SYS_unlink             87
-#define SYS_readlink           89
-#define SYS_chown              92
-#define SYS_fchown             93
-#define SYS_lchown             94
-#define SYS_getuid             102
-#define SYS_getgid             104
-#define SYS_geteuid            107
-#define SYS_getegid            108
-#define SYS_getppid            110
-#define SYS_chroot             161
-#define SYS_sync               162
-#define SYS_sethostname        170
-#define SYS_setdomainname      171
-#endif /* defined(__amd64__) || defined(__x86_64__) */
-
-#endif
+int
+dup(int fd)
+{
+	return __syscall1(SYS_dup, fd);
+}
