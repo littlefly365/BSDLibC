@@ -27,7 +27,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <sys/types.h>
 #include <sys/syscall.h>
 #include <syscall_asm.h>
 #include <unistd.h>

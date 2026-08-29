@@ -28,7 +28,6 @@
 */
 
 #include <sys/syscall.h>
-#include <sys/types.h>
 #include <sys/mman.h>
 #include <syscall_asm.h>
 
