@@ -78,4 +78,14 @@ int getopt(int nargc, char * const nargv[], const char *ostr);
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
+#if (_POSIX_C_SOURCE - 0) >= 2 || defined(_XOPEN_SOURCE) || \
+    defined(_NETBSD_SOURCE)
+int	 getopt(int, char * const [], const char *);
+
+extern	 char *optarg;			/* getopt(3) external variables */
+extern	 int opterr;
+extern	 int optind;
+extern	 int optopt;
+#endif
+
 #endif

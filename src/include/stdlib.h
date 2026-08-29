@@ -65,5 +65,6 @@ lldiv_t lldiv(long long num, long long denom);
 qdiv_t qdiv(quad_t num, quad_t denom);
 
 void	*alloca(size_t);
+char *getenv(const char *var);
 
 #endif
