@@ -40,6 +40,9 @@ int unlink(const char *path);
 int pipe(int fd[2]);
 int nanosleep(const struct timespec *req, struct timespec *rem);
 unsigned int sleep(unsigned int seconds);
+int chown(const char *path, uid_t uid, gid_t gid);
+int lchown(const char *path, uid_t uid, gid_t gid);
+int fchown(int fd, uid_t uid, gid_t gid);
 
 ssize_t readlink(const char *path, char *buf, size_t count);
 
