@@ -62,3 +62,11 @@ install-man3-symlinks: install-man3
 	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/vwarnx.3
 	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/warnc.3
 	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/vwarnc.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execl.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execlp.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execle.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execlpe.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/exect.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execv.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execvp.3
+	$(LINK) exec.3 $(DESTDIR)$(MANDIR)/man3/execvpe.3
