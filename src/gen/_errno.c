@@ -37,7 +37,7 @@ __RCSID("$NetBSD: _errno.c,v 1.14 2024/01/20 14:52:47 christos Exp $");
 #include <errno.h>
 #include <stdlib.h>
 
-extern int errno_value;
+#include "errno_private.h"
 
 int *
 __errno(void)
@@ -48,6 +48,6 @@ __errno(void)
 
 	return thr_errno();
 #else
-	return &errno_value;
+	return &errno;
 #endif
 }
