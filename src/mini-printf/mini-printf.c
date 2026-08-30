@@ -42,6 +42,7 @@
  */
 #define _INTERNAL 1
 #include "mini-printf.h"
+#include <sys/types.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
 #include <stdarg.h>
@@ -138,46 +139,27 @@ _puts(char *s, int len, void *buf)
 	return b->pbuffer - p0;
 }
 
-#ifdef MINI_PRINTF_ENABLE_OBJECTS
-static int (*mini_handler) (void* data, void* obj, int ch, int lhint, char** bf) = 0;
-static void (*mini_handler_freeor)(void* data, void*) = 0;
-static void * mini_handler_data = 0;
-
-void mini_printf_set_handler(
-	void* data,
-	int (*handler)(void* data, void* obj, int ch, int len_hint, char** buf),
-	void (*freeor)(void* data, void* buf))
-{
-	mini_handler = handler;
-	mini_handler_freeor = freeor;
-	mini_handler_data = data;
-}
-#endif
-
 int
-mini_vsnprintf(char *buffer, unsigned int buffer_len, const char *fmt, va_list va)
+vsnprintf(char *buf, size_t len, const char *fmt, va_list va)
 {
 	struct mini_buff b;
-	b.buffer = buffer;
-	b.pbuffer = buffer;
-	b.buffer_len = buffer_len;
-	if(buffer_len == 0) buffer = (void*) 0;
-	int n = mini_vpprintf(_puts, (buffer != (void*)0)?&b:(void*)0, fmt, va);
-	if(buffer == (void*) 0) {
+	b.buffer = buf;
+	b.pbuffer = buf;
+	b.buffer_len = len;
+	if(len == 0) buf = (void*) 0;
+	int n = vpprintf(_puts, (buf != (void*)0)?&b:(void*)0, fmt, va);
+	if(buf == (void*) 0) {
 		return n;
 	}
 	return b.pbuffer - b.buffer;
 }
 
 int
-mini_vpprintf(int (*puts)(char* s, int len, void* buf), void* buf, const char *fmt, va_list va)
+vpprintf(int (*puts)(char* s, int len, void* buf), void* buf, const char *fmt, va_list va)
 {
 	char bf[24];
 	char bf2[24];
 	char ch;
-#ifdef MINI_PRINTF_ENABLE_OBJECTS
-	void* obj;
-#endif
 	if(puts == (void*)0) {
 		/* run puts in counting mode. */
 		puts = _puts; buf = (void*)0;
@@ -255,20 +237,6 @@ mini_vpprintf(int (*puts)(char* s, int len, void* buf), void* buf, const char *f
 						len = puts(ptr, len, buf);
 					}
 					break;
-#ifdef MINI_PRINTF_ENABLE_OBJECTS
-				case 'O' :  /* Object by content (e.g. str) */
-				case 'R' :  /* Object by representation (e.g. repr)*/
-					obj = va_arg(va, void*);
-					len = mini_handler(mini_handler_data, obj, ch, pad_to, &ptr);
-					if (pad_to > 0) {
-						len = mini_pad(ptr, len, pad_char, pad_to, bf);
-						len = puts(bf, len, buf);
-					} else {
-						len = puts(ptr, len, buf);
-					}
-					mini_handler_freeor(mini_handler_data, ptr);
-					break;
-#endif
 				default:
 					len = 1;
 					len = puts(&ch, len, buf);
@@ -283,37 +251,23 @@ end:
 
 
 int
-mini_snprintf(char* buffer, unsigned int buffer_len, const char *fmt, ...)
+snprintf(char* buf, size_t len, const char *fmt, ...)
 {
 	int ret;
 	va_list va;
 	va_start(va, fmt);
-	ret = mini_vsnprintf(buffer, buffer_len, fmt, va);
+	ret = vsnprintf(buf, len, fmt, va);
 	va_end(va);
 
 	return ret;
 }
-
-#if 0
-static int
-mini_pprintf(int (*puts)(char*s, int len, void* buf), void* buf, const char *fmt, ...)
-{
-	int ret;
-	va_list va;
-	va_start(va, fmt);
-	ret = mini_vpprintf(puts, buf, fmt, va);
-	va_end(va);
-
-	return ret;
-}
-#endif
 
 static int
 vfdprintf(int fd, const char *fmt, va_list va)
 {
 	int len;
 	char buf[1024];
-	len = mini_vsnprintf(buf, sizeof(buf), fmt, va);
+	len = vsnprintf(buf, sizeof(buf), fmt, va);
 
 	if (len <= 0)
 		return len;

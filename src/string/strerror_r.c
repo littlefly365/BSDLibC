@@ -32,12 +32,13 @@
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: strerror_r.c,v 1.6 2024/06/08 21:35:18 joerg Exp $");
 
-#include "namespace.h"
+//#include "namespace.h"
 #include <assert.h>
-#include <atomic.h>
+//#include <atomic.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include <string.h>
 #include <stdio.h>	/* for sys_nerr on FreeBSD */
 #ifdef NLS
@@ -48,7 +49,7 @@ __RCSID("$NetBSD: strerror_r.c,v 1.6 2024/06/08 21:35:18 joerg Exp $");
 #include "setlocale_local.h"
 #endif
 
-#include "extern.h"
+//#include "extern.h"
 
 #define	UPREFIX	"Unknown error: %d"
 
