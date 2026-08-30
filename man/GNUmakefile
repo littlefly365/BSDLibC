@@ -51,3 +51,14 @@ install-man3-symlinks: install-man3
 	$(LINK) md5.3 $(DESTDIR)$(MANDIR)/man3/MD5Data.3
 	$(LINK) div.3 $(DESTDIR)$(MANDIR)/man3/ldiv.3
 	$(LINK) div.3 $(DESTDIR)$(MANDIR)/man3/lldiv.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/verr.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/errx.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/verrx.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/errc.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/verrc.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/warn.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/vwarn.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/warnx.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/vwarnx.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/warnc.3
+	$(LINK) err.3 $(DESTDIR)$(MANDIR)/man3/vwarnc.3
