@@ -20,4 +20,8 @@ int veprintf(const char *fmt, va_list va);
 int fputs(const char *s, FILE *stream);
 int putchar(int c);
 
+
+/* NetBSD implementations */
+void perror(const char *s);
+
 #endif

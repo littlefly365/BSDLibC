@@ -38,12 +38,12 @@ __RCSID("$NetBSD: perror.c,v 1.24 2006/01/26 11:13:42 kleink Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
-#include "namespace.h"
+//#include "namespace.h"
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
-#include "extern.h"
+//#include "extern.h"
 
 /*
  * Since perror() is not allowed to change the contents of strerror()'s
@@ -64,5 +64,5 @@ perror(const char *s)
 		separator = ": ";
 
 	(void)strerror_r(errno, buf, sizeof(buf));
-	(void)fprintf(stderr, "%s%s%s\n", s, separator, buf);
+	(void)eprintf("%s%s%s\n", s, separator, buf);
 }
