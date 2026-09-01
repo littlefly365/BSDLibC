@@ -7,6 +7,7 @@ STDIO := $(wildcard stdio/*.c)
 MD := $(wildcard md/*.c)
 LIB := $(wildcard crt/libc_start.c)
 COMPAT := $(wildcard compat/OpenBSD/*.c) $(wildcard compat/NetBSD/*.c)
+LOCALE := $(wildcard locale/*.c)
 PRINTF := $(wildcard mini-printf/*.c)
 ARCH_S := $(wildcard arch/$(MACHINE)/src/gen/*.S)
 
@@ -15,7 +16,7 @@ SYSTEM_INCLUDES := $(wildcard include/sys/*.h)
 MACHINE_INCLUDES := $(wildcard arch/$(MACHINE)/machine/*.h)
 
 ALL_C_SRCS := $(STRING) $(CTYPE) $(LINUX) $(GEN) $(STDLIB) $(MD) $(LIB) $(COMPAT) \
-		$(STDIO) $(PRINTF)
+		$(LOCALE) $(STDIO) $(PRINTF)
 ALL_S_SRCS := $(ARCH_S)
 C_OBJS := $(ALL_C_SRCS:%.c=%.o)
 S_OBJS := $(ALL_S_SRCS:%.S=%.o)

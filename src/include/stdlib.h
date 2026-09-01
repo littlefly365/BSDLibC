@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 #include <sys/null.h>
+#include <locale.h>
 
 #define	EXIT_FAILURE	1
 #define	EXIT_SUCCESS	0
@@ -78,5 +79,10 @@ unsigned long strtoul(const char *nptr, char **endptr, int base);
 unsigned long long strtoull(const char *nptr, char **endptr, int base);
 quad_t	 strtoq(const char *__restrict, char **__restrict, int);
 u_quad_t strtouq(const char *__restrict, char **__restrict, int);
+
+long strtol_l(const char * __restrict, char ** __restrict, int, locale_t);
+unsigned long strtoul_l(const char * __restrict, char ** __restrict, int, locale_t);
+long long int strtoll_l(const char * __restrict, char ** __restrict, int, locale_t);
+unsigned long long int strtoull_l(const char * __restrict, char ** __restrict, int, locale_t);
 
 #endif
