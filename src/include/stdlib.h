@@ -10,6 +10,7 @@
 int abs(int j);
 long labs(long j);
 long long int llabs(long long int j);
+quad_t	 qabs(quad_t);
 void _Exit(int exit_code);
 void exit(int status);
 int at_quick_exit(void (*func)(void));
@@ -66,5 +67,16 @@ qdiv_t qdiv(quad_t num, quad_t denom);
 
 void	*alloca(size_t);
 char *getenv(const char *var);
+
+extern char *suboptarg;
+int getsubopt(char **optionp, char * const *tokens, char **valuep);
+
+long long strtonum(const char *numstr, long long minval, long long maxval, const char **errstrp);
+long strtol(const char *nptr, char **endptr, int base);
+long long strtoll(const char *nptr, char **endptr, int base);
+unsigned long strtoul(const char *nptr, char **endptr, int base);
+unsigned long long strtoull(const char *nptr, char **endptr, int base);
+quad_t	 strtoq(const char *__restrict, char **__restrict, int);
+u_quad_t strtouq(const char *__restrict, char **__restrict, int);
 
 #endif

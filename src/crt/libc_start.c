@@ -31,12 +31,10 @@
 #include <string.h>
 
 char *__progname;
-char *__full_progname;
 
 void
 __libc_start_main(int (*main)(int argc, char *argv[], char *envp[]), int argc, char *argv[], char *environ[])
 {
-	__full_progname = argv[0];
 	__progname = strrchr(argv[0], '/');
 	if (__progname == NULL)
 		__progname = argv[0];

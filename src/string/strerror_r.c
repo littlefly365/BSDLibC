@@ -53,8 +53,6 @@ __RCSID("$NetBSD: strerror_r.c,v 1.6 2024/06/08 21:35:18 joerg Exp $");
 
 #define	UPREFIX	"Unknown error: %d"
 
-__weak_alias(strerror_r, _strerror_r)
-
 #ifdef NLS
 static void
 load_errlist(locale_t loc)

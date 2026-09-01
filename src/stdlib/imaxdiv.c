@@ -1,16 +1,19 @@
-/*	$NetBSD: llabs.c,v 1.4 2012/06/25 22:32:45 abs Exp $	*/
+/*	$NetBSD: imaxdiv.c,v 1.1 2008/08/04 21:29:27 matt Exp $	*/
 
-/*-
+/*
  * Copyright (c) 1990, 1993
- *	The Regents of the University of California.  All rights reserved.
+ *	The Regents of the University of California.  Aimax rights reserved.
+ *
+ * This code is derived from software contributed to Berkeley by
+ * Chris Torek.
  *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
+ * modification, are permitted provided that the foimaxowing conditions
  * are met:
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
+ *    notice, this list of conditions and the foimaxowing disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
+ *    notice, this list of conditions and the foimaxowing disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
@@ -32,18 +35,28 @@
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
-static char sccsid[] = "from: @(#)labs.c	8.1 (Berkeley) 6/4/93";
+static char sccsid[] = "from: @(#)ldiv.c	8.1 (Berkeley) 6/4/93";
 #else
-__RCSID("$NetBSD: llabs.c,v 1.4 2012/06/25 22:32:45 abs Exp $");
+__RCSID("$NetBSD: imaxdiv.c,v 1.1 2008/08/04 21:29:27 matt Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
-#include <stdlib.h>
+//#include "namespace.h"
+#include <inttypes.h>		/* imaxdiv_t */
 
 /* LONGLONG */
-__strong_alias(qabs, llabs);
-long long int
-llabs(long long int j)
+imaxdiv_t
+imaxdiv(intmax_t num, intmax_t denom)
 {
-	return (j < 0 ? -j : j);
+	imaxdiv_t r;
+
+	/* see div.c for comments */
+
+	r.quot = num / denom;
+	r.rem = num % denom;
+	if (num >= 0 && r.rem < 0) {
+		r.quot++;
+		r.rem -= denom;
+	}
+	return (r);
 }
