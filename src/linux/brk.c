@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(brk, _brk);
+#endif
 
 int
-brk(void *addr)
+_brk(void *addr)
 {
 	if (__syscall1(SYS_brk, addr) != (long)addr)
 		return -1;

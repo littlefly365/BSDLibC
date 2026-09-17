@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(write, _write);
+#endif
 
 ssize_t
-write(int fd, const void *buf, size_t count)
+_write(int fd, const void *buf, size_t count)
 {
 	return __syscall3(SYS_write, fd, buf, count);
 }

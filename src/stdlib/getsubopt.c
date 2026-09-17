@@ -42,12 +42,16 @@ __RCSID("$NetBSD: getsubopt.c,v 1.10 2018/08/30 12:06:06 christos Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
-//#include "namespace.h"
+#include "namespace.h"
 
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#ifdef __weak_alias
+__weak_alias(getsubopt,_getsubopt)
+#endif
 
 /*
  * The SVID interface to getsubopt provides no way of figuring out which

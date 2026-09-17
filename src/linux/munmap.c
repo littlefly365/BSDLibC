@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <sys/mmap.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(munmap, _munmap);
+#endif
 
 int
-munmap(void *start, size_t len)
+_munmap(void *start, size_t len)
 {
 	return __syscall2(SYS_munmap, start, len);
 }

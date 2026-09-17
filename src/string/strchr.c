@@ -39,6 +39,7 @@ __RCSID("$NetBSD: strchr.c,v 1.7 2020/04/07 08:07:58 skrll Exp $");
 #endif /* LIBC_SCCS and not lint */
 
 #if !defined(_KERNEL) && !defined(_STANDALONE)
+#include "namespace.h"
 #include <assert.h>
 #include <string.h>
 #else

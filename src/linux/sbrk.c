@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(sbrk, _sbrk);
+#endif
 
 void *
-sbrk(intptr_t increment)
+_sbrk(intptr_t increment)
 {
 	void *new, *ret;
 	void *old = (void*)__syscall1(SYS_brk, 0);

@@ -29,6 +29,10 @@
  * SUCH DAMAGE.
  */
 
+#if HAVE_NBTOOL_CONFIG_H
+#include "nbtool_config.h"
+#endif
+
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -38,9 +42,19 @@ __RCSID("$NetBSD: strcasecmp.c,v 1.3 2018/08/11 16:25:32 christos Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#if !defined(_KERNEL) && !defined(_STANDALONE)
+#include "namespace.h"
 #include <assert.h>
 #include <ctype.h>
 #include <string.h>
+#ifdef __weak_alias
+__weak_alias(strcasecmp,_strcasecmp)
+__weak_alias(strncasecmp,_strncasecmp)
+#endif
+#else
+#include <lib/libkern/libkern.h>
+#include <machine/limits.h>
+#endif 
 
 int
 strcasecmp(const char *s1, const char *s2)

@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
+#include <sys/cdefs.h>
 #include <sys/mman.h>
-#include <syscall_asm.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(mmap, _mmap);
+#endif
 
 void *
-mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)
+_mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)
 {
 	return (void*)__syscall6(SYS_mmap, addr, len, prot, flags, fd, offset);
 }

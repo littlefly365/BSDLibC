@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(getuid, _getuid);
+#endif
 
 uid_t
-getuid(void)
+_getuid(void)
 {
 	return __syscall0(SYS_getuid);
 }

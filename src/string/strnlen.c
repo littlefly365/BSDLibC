@@ -26,14 +26,23 @@
  * SUCH DAMAGE.
  */
 
+#if HAVE_NBTOOL_CONFIG_H
+#include "nbtool_config.h"
+#endif
+
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 __RCSID("$NetBSD: strnlen.c,v 1.2 2014/01/09 11:25:11 apb Exp $");
 #endif /* LIBC_SCCS and not lint */
 /* FreeBSD: src/lib/libc/string/strnlen.c,v 1.1 2009/02/28 06:00:58 das Exp */
 
+#if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <string.h>
+#else
+#include <lib/libkern/libkern.h>
+#endif
 
+#if !HAVE_STRNLEN
 size_t
 strnlen(const char *s, size_t maxlen)
 {
@@ -45,3 +54,4 @@ strnlen(const char *s, size_t maxlen)
 	}
 	return (len);
 }
+#endif /* !HAVE_STRNLEN */

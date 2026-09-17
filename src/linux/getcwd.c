@@ -28,16 +28,21 @@
 */
 
 #include <sys/syscall.h>
+#include <sys/cdefs.h>
 #include <sys/param.h>
-#include <syscall_asm.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <asm.h>
 
 #define cwd_check(exp, buf) ((exp) > 0 && buf[0] == '/')
 
+#ifdef __weak_alias
+__weak_alias(getcwd, _getcwd);
+#endif
+
 char *
-getcwd(char *buf, size_t size)
+_getcwd(char *buf, size_t size)
 {
 	if (!size && buf) {
 		errno = EINVAL;

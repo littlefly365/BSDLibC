@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
 
-gid_t
-getpgid(void)
+#ifdef __weak_alias
+__weak_alias(getpgid, _getpgid);
+#endif
+
+pid_t
+getpgid(pid_t pid)
 {
-	return __syscall0(SYS_getpgid);
+	return __syscall1(SYS_getpgid, pid);
 }

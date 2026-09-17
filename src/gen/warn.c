@@ -42,9 +42,15 @@ __RCSID("$NetBSD: warn.c,v 1.14 2007/06/18 14:13:54 ginsbach Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <err.h>
 #include <stdarg.h>
 
+#ifdef __weak_alias
+__weak_alias(warn, _warn)
+#endif
+
+#if !HAVE_ERR_H
 void
 warn(const char *fmt, ...)
 {
@@ -54,3 +60,4 @@ warn(const char *fmt, ...)
 	vwarn(fmt, ap);
 	va_end(ap);
 }
+#endif

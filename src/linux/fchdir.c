@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(fchdir, _fchdir);
+#endif
 
 int
-fchdir(int fd)
+_fchdir(int fd)
 {
 	return __syscall1(SYS_fchdir, fd);
 }

@@ -27,12 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <sys/cdefs.h>
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
 
-__strong_alias(_Exit, _exit)
+__strong_alias(_Exit, _exit);
 void
 _exit(int exit_code)
 {

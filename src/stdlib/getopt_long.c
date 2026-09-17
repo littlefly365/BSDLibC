@@ -36,6 +36,8 @@
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: getopt_long.c,v 1.28 2024/01/19 18:41:38 christos Exp $");
 
+#include "namespace.h"
+
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
@@ -47,9 +49,16 @@ __RCSID("$NetBSD: getopt_long.c,v 1.28 2024/01/19 18:41:38 christos Exp $");
 #include <stdlib.h>
 #include <string.h>
 
+#if HAVE_NBTOOL_CONFIG_H && !HAVE_GETOPT_LONG && !HAVE_DECL_OPTIND
+#define REPLACE_GETOPT
+#endif
+
 #define REPLACE_GETOPT
 
 #ifdef REPLACE_GETOPT
+#ifdef __weak_alias
+__weak_alias(getopt,_getopt)
+#endif
 int	opterr = 1;		/* if error message should be printed */
 int	optind = 1;		/* index into parent argv vector */
 int	optopt = '?';		/* character checked for validity */
@@ -57,6 +66,10 @@ int	optreset;		/* reset getopt */
 char    *optarg;		/* argument associated with option */
 #elif HAVE_NBTOOL_CONFIG_H && !HAVE_DECL_OPTRESET
 static int optreset;
+#endif
+
+#ifdef __weak_alias
+__weak_alias(getopt_long,_getopt_long)
 #endif
 
 #define IGNORE_FIRST	(*options == '-' || *options == '+')

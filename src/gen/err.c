@@ -42,9 +42,15 @@ __RCSID("$NetBSD: err.c,v 1.26 2007/06/18 14:13:54 ginsbach Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <err.h>
 #include <stdarg.h>
 
+#ifdef __weak_alias
+__weak_alias(err, _err)
+#endif
+
+#if !HAVE_ERR_H
 __dead void
 err(int eval, const char *fmt, ...)
 {
@@ -54,3 +60,4 @@ err(int eval, const char *fmt, ...)
 	verr(eval, fmt, ap);
 	va_end(ap);
 }
+#endif

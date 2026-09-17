@@ -38,7 +38,12 @@ __RCSID("$NetBSD: strlen.c,v 1.3 2018/02/06 09:28:48 mrg Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#if !defined(_KERNEL) && !defined(_STANDALONE)
+#include <assert.h>
 #include <string.h>
+#else
+#include <lib/libkern/libkern.h>
+#endif
 
 size_t
 strlen(const char *str)

@@ -36,6 +36,7 @@
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: reallocarr.c,v 1.5 2015/08/20 22:27:49 kamil Exp $");
 
+#include "namespace.h"
 #include <errno.h>
 /* Old POSIX has SIZE_MAX in limits.h */
 #include <limits.h>
@@ -43,8 +44,15 @@ __RCSID("$NetBSD: reallocarr.c,v 1.5 2015/08/20 22:27:49 kamil Exp $");
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _LIBC
+#ifdef __weak_alias
+__weak_alias(reallocarr, _reallocarr)
+#endif
+#endif
+
 #define SQRT_SIZE_MAX (((size_t)1) << (sizeof(size_t) * CHAR_BIT / 2))
 
+#if !HAVE_REALLOCARR
 int
 reallocarr(void *ptr, size_t number, size_t size)
 {
@@ -84,3 +92,4 @@ reallocarr(void *ptr, size_t number, size_t size)
 	errno = saved_errno;
 	return result;
 }
+#endif

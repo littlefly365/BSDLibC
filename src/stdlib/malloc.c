@@ -40,6 +40,7 @@
  *
  */
 
+#include "namespace.h"
 #if defined(__FreeBSD__)
 #   if defined(__i386__)
 #       define malloc_minsize		16U
@@ -491,8 +492,9 @@ malloc_init(void)
 	} else if (i == 1) {
 	    continue;
 	} else {
-	    p = _malloc_options;
+	    p = NULL;
 	}
+
 	for (; p != NULL && *p != '\0'; p++) {
 	    switch (*p) {
 		case '>': malloc_cache   <<= 1; break;

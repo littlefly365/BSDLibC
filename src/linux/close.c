@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(close, _close);
+#endif
 
 int
-close(int fd)
+_close(int fd)
 {
 	return __syscall1(SYS_close, fd);
 }

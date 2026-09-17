@@ -94,7 +94,7 @@ main(int argc, char *argv[])
 static void
 usage(void)
 {
-	(void)eprintf("usage: %s [-s] [name-of-host]\n",
+	(void)fprintf(stderr, "usage: %s [-s] [name-of-host]\n",
 	    getprogname());
 	exit(1);
 	/* NOTREACHED */

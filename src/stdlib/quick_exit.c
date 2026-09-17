@@ -30,6 +30,9 @@
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: quick_exit.c,v 1.1 2013/04/26 18:29:55 christos Exp $");
 
+#include "namespace.h"
+#include "reentrant.h"
+
 #include <stdlib.h>
 
 /**

@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(execve, _execve);
+#endif
 
 int
-execve(const char *path, char *const argv[], char *const envp[])
+_execve(const char *path, char *const argv[], char *const envp[])
 {
 	return __syscall3(SYS_execve, path, argv, envp);
 }

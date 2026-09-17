@@ -41,8 +41,12 @@ __RCSID("$NetBSD: strncat.c,v 1.3 2018/02/04 01:13:45 mrg Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <assert.h>
 #include <string.h>
+#else
+#include <lib/libkern/libkern.h>
+#endif
 
 #ifdef _FORTIFY_SOURCE
 #undef strncat

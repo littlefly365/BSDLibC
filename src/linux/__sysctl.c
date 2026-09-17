@@ -38,12 +38,12 @@
 #include <sys/param.h>		/* MACHINE and MACHINE_ARCH */
 #include <sys/syscall.h>
 #include <sys/sysctl.h>
-#include <syscall_asm.h>
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <paths.h>
+#include <asm.h>
 /* machine depends headers */
 #include <machine/vmparam.h>
 
@@ -81,11 +81,11 @@ __sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp, con
 	case CTL_HW:
 		return hw___sysctl(name + 1, namelen - 1, oldp, oldlenp, newp, newlen);
 	default:
-		break;
+		errno = EINVAL;
+		return -1;
 	}
 
-	errno = EINVAL;
-	return -1;
+	return 0;
 }
 
 static int
@@ -105,9 +105,6 @@ kern___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp
 		flenp = max_size(flenp, SYS_NMLN);
 	}
 
-/* In this switch we get information of KERN_* variables */
-/* Please don't change memcpy for x function. It's planned to include */
-/* an optimized version of memcpy for x86_64 in assembler */
 	switch (name[0]) {
 	case KERN_OSTYPE:
 		memcpy(oldp, sysctl_cache.uts.sysname, flenp);
@@ -142,6 +139,7 @@ kern___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp
 		close(fd);
 		break;
 	default:
+		errno = EINVAL;
 		return -1;
 	}
 
@@ -172,11 +170,11 @@ set:
 		close(fd);
 		break;
 	default:
-		errno = ENOSYS;
+		errno = EINVAL;
 		return -1;
 	}
 
-	return -1;
+	return 0;
 }
 
 static int
@@ -199,9 +197,9 @@ hw___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp, 
 		*(int*)oldp = PAGE_SIZE;
 		break;
 	default:
-		errno = ENOSYS;
+		errno = EINVAL;
 		return -1;
 	}
 
-	return -1;
+	return 0;
 }

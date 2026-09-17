@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(getgroups, _getgroups);
+#endif
 
 int
-getgroups(int gidsetlen, gid_t *gidset)
+_getgroups(int gidsetlen, gid_t *gidset)
 {
 	return __syscall2(SYS_getgroups, gidsetlen, gidset);
 }

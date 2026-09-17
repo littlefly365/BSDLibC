@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
+#include <sys/cdefs.h>
 #include <sys/mman.h>
-#include <syscall_asm.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(madvise, _madvise);
+#endif
 
 int
-madvise(void *addr, size_t len, int advice)
+_madvise(void *addr, size_t len, int advice)
 {
 	return __syscall3(SYS_madvise, addr, len, advice);
 }

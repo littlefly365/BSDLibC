@@ -42,17 +42,24 @@ __RCSID("$NetBSD: verrx.c,v 1.15 2011/07/17 20:54:34 joerg Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <err.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef __weak_alias
+__weak_alias(verrx, _verrx)
+#endif
+
+#if !HAVE_ERR_H
 __dead void
 verrx(int eval, const char *fmt, va_list ap)
 {
-	(void)eprintf("%s: ", getprogname());
+	(void)fprintf(stderr, "%s: ", getprogname());
 	if (fmt != NULL)
-		(void)veprintf(fmt, ap);
-	(void)eprintf("\n");
+		(void)vfprintf(stderr, fmt, ap);
+	(void)fprintf(stderr, "\n");
 	exit(eval);
 }
+#endif

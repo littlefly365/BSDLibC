@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(access, _access);
+#endif
 
 int
-access(const char *path, int mode)
+_access(const char *path, int mode)
 {
 	return __syscall2(SYS_access, path, mode);
 }

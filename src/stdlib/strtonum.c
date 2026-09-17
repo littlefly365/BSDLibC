@@ -1,65 +1,84 @@
-/*	$OpenBSD: strtonum.c,v 1.8 2015/09/13 08:31:48 guenther Exp $	*/
-
-/*
- * Copyright (c) 2004 Ted Unangst and Todd Miller
+/*	$NetBSD: strtonum.c,v 1.8 2025/09/20 12:19:31 christos Exp $	*/
+/*-
+ * Copyright (c) 2014 The NetBSD Foundation, Inc.
  * All rights reserved.
  *
- * Permission to use, copy, modify, and distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
+ * This code is derived from software contributed to The NetBSD Foundation
+ * by Christos Zoulas.
  *
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <errno.h>
-#include <limits.h>
-#include <stdlib.h>
+#if HAVE_NBTOOL_CONFIG_H
+#include "nbtool_config.h"
+#endif
 
-#define	INVALID		1
-#define	TOOSMALL	2
-#define	TOOLARGE	3
+#include <sys/cdefs.h>
+#if defined(LIBC_SCCS) && !defined(lint)
+__RCSID("$NetBSD: strtonum.c,v 1.8 2025/09/20 12:19:31 christos Exp $");
+#endif
+
+#include "namespace.h"
+
+#define _OPENBSD_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <inttypes.h>
 
 long long
-strtonum(const char *numstr, long long minval, long long maxval,
-    const char **errstrp)
+strtonum(const char *nptr, long long minval, long long maxval,
+         const char **errstr)
 {
-	long long ll = 0;
-	int error = 0;
-	char *ep;
-	struct errval {
-		const char *errstr;
-		int err;
-	} ev[4] = {
-		{ NULL,		0 },
-		{ "invalid",	EINVAL },
-		{ "too small",	ERANGE },
-		{ "too large",	ERANGE },
-	};
+	int e;
+	long long rv;
+	const char *resp;
+	char *eptr;
 
-	ev[0].err = errno;
-	errno = 0;
-	if (minval > maxval) {
-		error = INVALID;
-	} else {
-		ll = strtoll(numstr, &ep, 10);
-		if (numstr == ep || *ep != '\0')
-			error = INVALID;
-		else if ((ll == LLONG_MIN && errno == ERANGE) || ll < minval)
-			error = TOOSMALL;
-		else if ((ll == LLONG_MAX && errno == ERANGE) || ll > maxval)
-			error = TOOLARGE;
+	if (errstr == NULL)
+		errstr = &resp;
+
+	if (minval > maxval)
+		goto out;
+
+	rv = (long long)strtoi(nptr, &eptr, 10, minval, maxval, &e);
+
+	switch (e) {
+	case 0:
+		*errstr = NULL;
+		return rv;
+	case ECANCELED:
+	case ENOTSUP:
+		goto out;
+	case ERANGE:
+		if (*eptr)
+			goto out;
+		*errstr = rv == maxval ? "too large" : "too small";
+		return 0;
+	default:
+		abort();
 	}
-	if (errstrp != NULL)
-		*errstrp = ev[error].errstr;
-	errno = ev[error].err;
-	if (error)
-		ll = 0;
 
-	return (ll);
+out:
+	*errstr = "invalid";
+	return 0;
 }

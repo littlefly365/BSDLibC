@@ -28,11 +28,17 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(chown, _chown);
+#endif
 
 int
-chown(const char *path, uid_t uid, gid_t gid)
+_chown(const char *path, uid_t uid, gid_t gid)
 {
 	return __syscall3(SYS_chown, path, uid, gid);
 }
+

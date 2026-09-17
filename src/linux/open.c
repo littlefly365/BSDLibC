@@ -2,12 +2,17 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <fcntl.h>
 #include <stdarg.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(open, _open);
+#endif
 
 int
-open(const char *filename, int flags, ...)
+_open(const char *filename, int flags, ...)
 {
 	va_list args;
 	va_start(args, flags);

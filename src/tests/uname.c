@@ -151,6 +151,6 @@ main(int argc, char **argv)
 static void
 usage(void)
 {
-	eprintf("usage: %s [-amnprsv]\n", getprogname());
+	fprintf(stderr, "usage: %s [-amnprsv]\n", getprogname());
 	exit(EXIT_FAILURE);
 }

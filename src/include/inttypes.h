@@ -71,17 +71,14 @@ intmax_t	strtoimax_l(const char * __restrict,
 		    char ** __restrict, int, locale_t);
 uintmax_t	strtoumax_l(const char * __restrict,
 		    char ** __restrict, int, locale_t);
-#if 0
 intmax_t	wcstoimax_l(const wchar_t * __restrict,
 		    wchar_t ** __restrict, int, locale_t);
 uintmax_t	wcstoumax_l(const wchar_t * __restrict,
 		    wchar_t ** __restrict, int, locale_t);
 #endif
-#endif
 
 
 #if defined(_NETBSD_SOURCE)
-#if 0
 intmax_t	strtoi(const char * __restrict, char ** __restrict, int,
 	               intmax_t, intmax_t, int *);
 uintmax_t	strtou(const char * __restrict, char ** __restrict, int,
@@ -92,7 +89,6 @@ intmax_t	strtoi_l(const char * __restrict, char ** __restrict, int,
 uintmax_t	strtou_l(const char * __restrict, char ** __restrict, int,
 	                 uintmax_t, uintmax_t, int *, locale_t);
 #endif /* defined(_NETBSD_SOURCE) */
-#endif
 __END_DECLS
 
 #endif /* !_INTTYPES_H_ */

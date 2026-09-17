@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(dup, _dup);
+#endif
 
 int
-dup(int fd)
+_dup(int fd)
 {
 	return __syscall1(SYS_dup, fd);
 }

@@ -29,6 +29,10 @@
  * SUCH DAMAGE.
  */
 
+#if HAVE_NBTOOL_CONFIG_H
+#include "nbtool_config.h"
+#endif
+
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -38,20 +42,27 @@ __RCSID("$NetBSD: verrc.c,v 1.3 2014/06/06 11:38:41 joerg Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <err.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __weak_alias
+__weak_alias(verrc, _verrc)
+#endif
+
+#if !HAVE_ERR_H || !HAVE_DECL_ERRC
 __dead void
 verrc(int eval, int code, const char *fmt, va_list ap)
 {
-	(void)eprintf("%s: ", getprogname());
+	(void)fprintf(stderr, "%s: ", getprogname());
 	if (fmt != NULL) {
-		(void)veprintf(fmt, ap);
-		(void)eprintf(": ");
+		(void)vfprintf(stderr, fmt, ap);
+		(void)fprintf(stderr, ": ");
 	}
-	(void)eprintf("%s\n", strerror(code));
+	(void)fprintf(stderr, "%s\n", strerror(code));
 	exit(eval);
 }
+#endif

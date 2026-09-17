@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(getgid, _getgid);
+#endif
 
 gid_t
-getgid(void)
+_getgid(void)
 {
 	return __syscall0(SYS_getgid);
 }

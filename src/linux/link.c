@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(link, _link);
+#endif
 
 int
-link(const char *path)
+_link(const char *file1, const char *file2)
 {
-	return __syscall1(SYS_link, path);
+	return __syscall2(SYS_link, file1, file2);
 }

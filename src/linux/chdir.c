@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(chdir, _chdir);
+#endif
 
 int
-chdir(const char *path)
+_chdir(const char *path)
 {
 	return __syscall1(SYS_chdir, path);
 }

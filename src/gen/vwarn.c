@@ -38,11 +38,18 @@
 __RCSID("$NetBSD: vwarn.c,v 1.16 2014/01/16 17:21:38 christos Exp $");
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <err.h>
 #include <errno.h>
 
+#ifdef __weak_alias
+__weak_alias(vwarn, _vwarn)
+#endif
+
+#if !HAVE_ERR_H
 void
 vwarn(const char *fmt, va_list ap)
 {
 	vwarnc(errno, fmt, ap);
 }
+#endif

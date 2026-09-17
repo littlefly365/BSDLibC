@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(lseek, _lseek);
+#endif
 
 off_t
-lseek(int fd, off_t offset, int whence)
+_lseek(int fd, off_t offset, int whence)
 {
 	return __syscall3(SYS_lseek, fd, offset, whence);
 }

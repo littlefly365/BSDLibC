@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(dup2, _dup2);
+#endif
 
 int
-dup2(int old, int new)
+_dup2(int old, int new)
 {
 	if (old == new)
 		return old; /* TODO: file descriptor verification */

@@ -41,8 +41,13 @@ __RCSID("$NetBSD: strstr.c,v 1.3 2018/02/04 01:13:45 mrg Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <assert.h>
 #include <string.h>
+#else
+#include <sys/param.h>
+#include <lib/libkern/libkern.h>
+#endif
 
 /*
  * Find the first occurrence of find in s.

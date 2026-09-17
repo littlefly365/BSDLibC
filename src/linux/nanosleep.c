@@ -28,12 +28,17 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
 #include <time.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(nanosleep, _nanosleep);
+#endif
 
 int
-nanosleep(const struct timespec *req, struct timespec *rem)
+_nanosleep(const struct timespec *req, struct timespec *rem)
 {
 	return __syscall2(SYS_nanosleep, req, rem);
 }

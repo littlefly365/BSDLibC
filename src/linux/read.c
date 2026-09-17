@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(read, _read);
+#endif
 
 ssize_t
-read(int fd, void *buf, size_t count)
+_read(int fd, void *buf, size_t count)
 {
 	return __syscall3(SYS_read, fd, buf, count);
 }

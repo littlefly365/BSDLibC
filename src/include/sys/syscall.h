@@ -27,8 +27,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _SYS_SYSCALLS_H
-#define _SYS_SYSCALLS_H	1
+#ifndef _SYS_SYSCALL_H
+#define _SYS_SYSCALL_H	1
 
 #if defined(__amd64__) || defined(__x86_64__)
 #define SYS_read               0
@@ -37,8 +37,10 @@
 #define SYS_close              3
 #define SYS_lseek              8
 #define SYS_mmap               9
+#define SYS_mprotect           10
 #define SYS_munmap             11
 #define SYS_brk                12
+#define SYS_ioctl              16
 #define SYS_access             21
 #define SYS_pipe               22
 #define SYS_madvise            28
@@ -62,6 +64,7 @@
 #define SYS_chown              92
 #define SYS_fchown             93
 #define SYS_lchown             94
+#define SYS_getrlimit          97
 #define SYS_getuid             102
 #define SYS_getgid             104
 #define SYS_geteuid            107

@@ -28,11 +28,16 @@
 */
 
 #include <sys/syscall.h>
-#include <syscall_asm.h>
+#include <sys/cdefs.h>
 #include <unistd.h>
+#include <asm.h>
+
+#ifdef __weak_alias
+__weak_alias(pipe, _pipe);
+#endif
 
 int
-pipe(int fd[2])
+_pipe(int fd[2])
 {
 	return __syscall1(SYS_pipe, fd);
 }
