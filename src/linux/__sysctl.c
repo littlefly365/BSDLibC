@@ -96,7 +96,8 @@ kern___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp
 	if (newlen != 0 && newp != NULL)
 		goto set;
 
-	if (name[0] < 6) {
+	if (name[0] == KERN_OSTYPE || name[0] == KERN_OSRELEASE || name[0] == KERN_VERSION || \
+		name[0] == KERN_HOSTNAME || name[0] == KERN_DOMAINNAME) {
 		if (sysctl_cache.uts.sysname[0] == '\0') {
 			if ((__syscall1(SYS_uname, &sysctl_cache.uts)) < 0)
 				return -1;
