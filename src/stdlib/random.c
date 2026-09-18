@@ -303,7 +303,7 @@ srandom_unlocked(unsigned int x)
 }
 
 void
-_srandom(unsigned int x)
+srandom(unsigned int x)
 {
 
 	mutex_lock(&random_mutex);

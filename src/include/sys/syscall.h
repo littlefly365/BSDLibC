@@ -41,6 +41,10 @@
 #define SYS_munmap             11
 #define SYS_brk                12
 #define SYS_ioctl              16
+#define SYS_pread64            17
+#define SYS_pwrite64           18
+#define SYS_readv              19
+#define SYS_writev             20
 #define SYS_access             21
 #define SYS_pipe               22
 #define SYS_madvise            28
@@ -52,7 +56,9 @@
 #define SYS_fork               57
 #define SYS_execve             59
 #define SYS_exit               60
+#define SYS_kill               62
 #define SYS_uname              63
+#define SYS_ftruncate          77
 #define SYS_getcwd             79
 #define SYS_chdir              80
 #define SYS_fchdir             81
@@ -69,13 +75,23 @@
 #define SYS_getgid             104
 #define SYS_geteuid            107
 #define SYS_getegid            108
+#define SYS_setpgid            109
 #define SYS_getppid            110
+#define SYS_setreuid           113
+#define SYS_setregid           114
 #define SYS_getgroups          115
 #define SYS_getpgid            121
 #define SYS_chroot             161
 #define SYS_sync               162
 #define SYS_sethostname        170
 #define SYS_setdomainname      171
+#endif /* defined(__amd64__) || defined(__x86_64__) */
+
+#if defined(__amd64__) || defined(__x86_64__)
+ #if defined(SYS_pread64) && defined(SYS_pwrite64)
+ #define SYS_pread              SYS_pread64
+ #define SYS_pwrite             SYS_pwrite64
+ #endif
 #endif /* defined(__amd64__) || defined(__x86_64__) */
 
 #endif
