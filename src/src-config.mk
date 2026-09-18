@@ -12,6 +12,7 @@ CITRUS := $(wildcard citrus/*.c) $(wildcard citrus-modules/*.c)
 ICONV := $(wildcard iconv/*.c)
 GDTOA := $(wildcard gdtoa/*.c)
 TERMIOS := $(wildcard termios/*.c)
+REGEX := $(wildcard regex/*.c)
 ARCH_C := $(wildcard arch/amd64/gen/*.c)
 ARCH_S := $(wildcard arch/amd64/gen/*.S)
 
@@ -20,7 +21,8 @@ SYSTEM_INCLUDES := $(wildcard include/sys/*.h)
 MACHINE_INCLUDES := $(wildcard arch/$(MACHINE)/machine/*.h)
 
 ALL_C_SRCS := $(STRING) $(CTYPE) $(LINUX) $(GEN) $(STDLIB) $(MD) $(LIB) $(COMPAT) \
-		$(LOCALE) $(STDIO) $(CITRUS) $(ICONV) $(GDTOA) $(ARCH_C) $(TERMIOS)
+		$(LOCALE) $(STDIO) $(CITRUS) $(ICONV) $(GDTOA) $(ARCH_C) $(TERMIOS) \
+		$(REGEX)
 
 ALL_S_SRCS := $(ARCH_S)
 C_OBJS := $(ALL_C_SRCS:%.c=%.o)
