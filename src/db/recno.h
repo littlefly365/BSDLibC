@@ -1,4 +1,4 @@
-/*	$NetBSD: execl.c,v 1.18 2024/01/20 14:52:47 christos Exp $	*/
+/*	$NetBSD: recno.h,v 1.6 2003/08/07 16:42:44 agc Exp $	*/
 
 /*-
  * Copyright (c) 1991, 1993
@@ -27,54 +27,11 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
+ *
+ *	@(#)recno.h	8.1 (Berkeley) 6/4/93
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)exec.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: execl.c,v 1.18 2024/01/20 14:52:47 christos Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
+enum SRCHOP { SDELETE, SINSERT, SEARCH};	/* Rec_search operation. */
 
-#include "namespace.h"
-#include <errno.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "reentrant.h"
-#include "extern.h"
-
-#ifdef __weak_alias
-__weak_alias(execl,_execl)
-#endif
-
-
-int
-execl(const char *name, const char *arg, ...)
-{
-	int r;
-	va_list ap;
-	char **argv;
-	int i;
-
-	va_start(ap, arg);
-	for (i = 2; va_arg(ap, char *) != NULL; i++)
-		continue;
-	va_end(ap);
-
-	if ((argv = alloca(i * sizeof (char *))) == NULL) {
-		errno = ENOMEM;
-		return -1;
-	}
-	
-	va_start(ap, arg);
-	argv[0] = __UNCONST(arg);
-	for (i = 1; (argv[i] = va_arg(ap, char *)) != NULL; i++) 
-		continue;
-	va_end(ap);
-	
-	r = execve(name, argv, environ);
-	return r;
-}
+#include "btree.h"
+#include "recno_extern.h"

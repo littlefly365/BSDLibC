@@ -35,6 +35,7 @@
 
 #ifdef __weak_alias
 __weak_alias(nanosleep, _nanosleep);
+__weak_alias(__nanosleep50, nanosleep);
 #endif
 
 int

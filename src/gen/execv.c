@@ -38,9 +38,14 @@ __RCSID("$NetBSD: execv.c,v 1.11 2024/01/20 14:52:47 christos Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <unistd.h>
+#include "reentrant.h"
+#include "extern.h"
 
-extern char **environ;
+#ifdef __weak_alias
+__weak_alias(execv,_execv)
+#endif
 
 int
 execv(const char *name, char * const *argv)

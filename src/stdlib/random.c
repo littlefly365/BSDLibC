@@ -63,6 +63,8 @@ static mutex_t random_mutex = MUTEX_INITIALIZER;
 #define mutex_unlock(a) (void)0
 #endif
 
+#undef SMALL_RANDOM
+
 #ifndef SMALL_RANDOM
 static void srandom_unlocked(unsigned int);
 static long random_unlocked(void);
@@ -301,7 +303,7 @@ srandom_unlocked(unsigned int x)
 }
 
 void
-srandom(unsigned int x)
+_srandom(unsigned int x)
 {
 
 	mutex_lock(&random_mutex);

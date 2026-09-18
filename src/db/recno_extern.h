@@ -1,4 +1,4 @@
-/*	$NetBSD: execl.c,v 1.18 2024/01/20 14:52:47 christos Exp $	*/
+/*	$NetBSD: extern.h,v 1.8 2008/08/26 21:18:38 joerg Exp $	*/
 
 /*-
  * Copyright (c) 1991, 1993
@@ -27,54 +27,26 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
+ *
+ *	@(#)extern.h	8.3 (Berkeley) 6/4/94
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)exec.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: execl.c,v 1.18 2024/01/20 14:52:47 christos Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
+#include "bt_extern.h"
 
-#include "namespace.h"
-#include <errno.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "reentrant.h"
-#include "extern.h"
-
-#ifdef __weak_alias
-__weak_alias(execl,_execl)
-#endif
-
-
-int
-execl(const char *name, const char *arg, ...)
-{
-	int r;
-	va_list ap;
-	char **argv;
-	int i;
-
-	va_start(ap, arg);
-	for (i = 2; va_arg(ap, char *) != NULL; i++)
-		continue;
-	va_end(ap);
-
-	if ((argv = alloca(i * sizeof (char *))) == NULL) {
-		errno = ENOMEM;
-		return -1;
-	}
-	
-	va_start(ap, arg);
-	argv[0] = __UNCONST(arg);
-	for (i = 1; (argv[i] = va_arg(ap, char *)) != NULL; i++) 
-		continue;
-	va_end(ap);
-	
-	r = execve(name, argv, environ);
-	return r;
-}
+int	 __rec_close(DB *);
+int	 __rec_delete(const DB *, const DBT *, u_int);
+int	 __rec_dleaf(BTREE *, PAGE *, uint32_t);
+int	 __rec_fd(const DB *);
+int	 __rec_fmap(BTREE *, recno_t);
+int	 __rec_fout(BTREE *);
+int	 __rec_fpipe(BTREE *, recno_t);
+int	 __rec_get(const DB *, const DBT *, DBT *, u_int);
+int	 __rec_iput(BTREE *, recno_t, const DBT *, u_int);
+int	 __rec_put(const DB *dbp, DBT *, const DBT *, u_int);
+int	 __rec_ret(BTREE *, EPG *, recno_t, DBT *, DBT *);
+EPG	*__rec_search(BTREE *, recno_t, enum SRCHOP);
+int	 __rec_seq(const DB *, DBT *, DBT *, u_int);
+int	 __rec_sync(const DB *, u_int);
+int	 __rec_vmap(BTREE *, recno_t);
+int	 __rec_vout(BTREE *);
+int	 __rec_vpipe(BTREE *, recno_t);

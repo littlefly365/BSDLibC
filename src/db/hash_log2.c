@@ -1,8 +1,11 @@
-/*	$NetBSD: execl.c,v 1.18 2024/01/20 14:52:47 christos Exp $	*/
+/*	$NetBSD: hash_log2.c,v 1.13 2008/09/11 12:33:55 joerg Exp $	*/
 
 /*-
- * Copyright (c) 1991, 1993
+ * Copyright (c) 1990, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
+ *
+ * This code is derived from software contributed to Berkeley by
+ * Margo Seltzer.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,52 +32,31 @@
  * SUCH DAMAGE.
  */
 
+#if HAVE_NBTOOL_CONFIG_H
+#include "nbtool_config.h"
+#endif
+
 #include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)exec.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: execl.c,v 1.18 2024/01/20 14:52:47 christos Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
+__RCSID("$NetBSD: hash_log2.c,v 1.13 2008/09/11 12:33:55 joerg Exp $");
 
-#include "namespace.h"
-#include <errno.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "reentrant.h"
-#include "extern.h"
+#include <sys/types.h>
 
-#ifdef __weak_alias
-__weak_alias(execl,_execl)
-#endif
+#include <db.h>
+#include "hash.h"
+#include "page.h"
+#include "hash_extern.h"
 
-
-int
-execl(const char *name, const char *arg, ...)
+uint32_t
+__log2(uint32_t num)
 {
-	int r;
-	va_list ap;
-	char **argv;
-	int i;
+	uint32_t i, limit;
 
-	va_start(ap, arg);
-	for (i = 2; va_arg(ap, char *) != NULL; i++)
-		continue;
-	va_end(ap);
+	if (num == 0)
+		return 0;
+	--num;
 
-	if ((argv = alloca(i * sizeof (char *))) == NULL) {
-		errno = ENOMEM;
-		return -1;
-	}
-	
-	va_start(ap, arg);
-	argv[0] = __UNCONST(arg);
-	for (i = 1; (argv[i] = va_arg(ap, char *)) != NULL; i++) 
+	limit = 0;
+	for (i = 0; limit < num; limit = limit * 2 + 1, i++)
 		continue;
-	va_end(ap);
-	
-	r = execve(name, argv, environ);
-	return r;
+	return (i);
 }

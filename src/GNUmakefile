@@ -12,9 +12,9 @@ LIB_SYMLINKS=lib$(LIBNAME)$(SO_SUFFIX) lib$(LIBNAME)$(SO_SUFFIX).$(major)
 MACHINE_HOST := $(shell uname -m)
 MACHINE ?= $(MACHINE_HOST)
 
-CFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-stack-protector -D_LIBC -I$(CURDIR)/include -fPIC \
-	-I$(CURDIR)/internal -I$(CURDIR)/stdio -I$(CURDIR)/stdlib -I$(CURDIR)/locale \
-	-I$(CURDIR)/citrus -I$(CURDIR)/gen -I$(CURDIR)/csu
+CFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-stack-protector -D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE \
+	-I$(CURDIR)/include -fPIC -I$(CURDIR)/internal -I$(CURDIR)/stdio -I$(CURDIR)/stdlib \
+	-I$(CURDIR)/locale -I$(CURDIR)/citrus -I$(CURDIR)/gen -I$(CURDIR)/csu
 LDFLAGS+=-nostdlib -ffreestanding -fno-stack-protector -Wl,-soname,lib$(LIBNAME)$(SO_SUFFIX).$(major) -static
 
 -include src-config.mk
