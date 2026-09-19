@@ -1,4 +1,4 @@
-SUBDIRS_C_SOURCE=string ctype linux gen stdlib stdio compat locale citrus citrus-modules iconv \
+SUBDIRS_C_SOURCE=string linux gen stdlib stdio compat locale citrus citrus-modules iconv \
 		gdtoa termios regex thread-sub db time arch/amd64/gen cdb nls
 SUBDIRS_S_SOURCE=gen string stdlib
 

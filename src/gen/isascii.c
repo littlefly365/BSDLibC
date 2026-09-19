@@ -1,11 +1,8 @@
-/* Only while porting the netbsd ctype functions */
-/* Taken from: FreeBSD (src/sys/sys/ctype.h) */
+/*	$NetBSD: isascii.c,v 1.4 2012/06/25 22:32:43 abs Exp $	*/
 
-/*-
- * SPDX-License-Identifier: BSD-3-Clause
- *
- * Copyright (c) 1982, 1988, 1991, 1993
- *	The Regents of the University of California.  All rights reserved.
+/*
+ * Copyright (c) 1989 The Regents of the University of California.
+ * All rights reserved.
  * (c) UNIX System Laboratories, Inc.
  * All or some portions of this file are derived from material licensed
  * to the University of California by American Telephone and Telegraph
@@ -35,70 +32,20 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
+ *
+ * 	from:	@(#)isctype.c	5.2 (Berkeley) 6/1/90
  */
 
-int
-isspace(int c)
-{
-	return (c == ' ' || (c >= '\t' && c <= '\r'));
-}
+#include <sys/cdefs.h>
+#if defined(LIBC_SCCS) && !defined(lint)
+__RCSID("$NetBSD: isascii.c,v 1.4 2012/06/25 22:32:43 abs Exp $");
+#endif /* LIBC_SCCS and not lint */
+
+#define _CTYPE_NOINLINE
+#include <ctype.h>
 
 int
 isascii(int c)
 {
-	return ((c & ~0x7f) == 0);
-}
-
-int
-isupper(int c)
-{
-	return (c >= 'A' && c <= 'Z');
-}
-
-int
-islower(int c)
-{
-	return (c >= 'a' && c <= 'z');
-}
-
-int
-isalpha(int c)
-{
-	return (isupper(c) || islower(c));
-}
-
-int
-isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-int
-isxdigit(int c)
-{
-	return (isdigit(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f'));
-}
-
-int
-isprint(int c)
-{
-	return (c >= ' ' && c <= '~');
-}
-
-int
-isgraph(int c)
-{
-	return (c != ' ' && isprint(c));
-}
-
-int
-toupper(int c)
-{
-	return (c - 0x20 * ((c >= 'a') && (c <= 'z')));
-}
-
-int
-tolower(int c)
-{
-	return (c + 0x20 * ((c >= 'A') && (c <= 'Z')));
+	return ((unsigned)(c) <= 0177);
 }

@@ -3,10 +3,6 @@ void pathconf(void)
 {
 }
 
-void isspace_l(void)
-{
-}
-
 void* __dl_cxa_refcount;
 
 void _sys_sched_yield(void)
