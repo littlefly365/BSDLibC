@@ -38,12 +38,17 @@ __RCSID("$NetBSD: setdomainname.c,v 1.13 2012/06/25 22:32:43 abs Exp $");
 #endif
 #endif /* LIBC_SCCS and not lint */
 
+#include "namespace.h"
 #include <sys/param.h>
 #include <sys/sysctl.h>
 
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
+
+#ifdef __weak_alias
+__weak_alias(setdomainname,_setdomainname)
+#endif
 
 int
 setdomainname(const char *name, size_t namelen)

@@ -685,25 +685,25 @@ struct state *lclptr = &lclmem;
 static struct tm	tm;
 # endif
 
-# if 2 <= HAVE_TZNAME + TZ_TIME_T || defined(__NetBSD__)
-#  if !defined(__LIBC12_SOURCE__)
+//# if 2 <= HAVE_TZNAME + TZ_TIME_T || defined(__NetBSD__)
+//#  if !defined(__LIBC12_SOURCE__)
 __aconst char *tzname[2] = { 
 	(__aconst char *) UNCONST(wildabbr),
 	(__aconst char *) UNCONST(wildabbr),
 };
-#  else
+//#  else
 
-extern __aconst char *	tzname[2];
+//extern __aconst char *	tzname[2];
 
-#  endif /* __LIBC12_SOURCE__ */
-# endif
+//#  endif /* __LIBC12_SOURCE__ */
+//# endif
 
-# if 2 <= USG_COMPAT + TZ_TIME_T || defined(__NetBSD__)
-#  if !defined(__LIBC12_SOURCE__)
+//# if 2 <= USG_COMPAT + TZ_TIME_T || defined(__NetBSD__)
+//#  if !defined(__LIBC12_SOURCE__)
 long 			timezone = 0;
 int			daylight = 0;
-#  endif /* __LIBC12_SOURCE__ */
-# endif /* 2<= USG_COMPAT + TZ_TIME_T */
+//#  endif /* __LIBC12_SOURCE__ */
+//# endif /* 2<= USG_COMPAT + TZ_TIME_T */
 
 # if 2 <= ALTZONE + TZ_TIME_T
 long			altzone = 0;
