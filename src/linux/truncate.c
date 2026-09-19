@@ -30,11 +30,14 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <time.h>
 #include <asm.h>
 
+#ifdef __weak_alias
+__weak_alias(ftruncate, __ftruncate);
+#endif
+
 int
-__nanosleep50(const struct timespec *req, struct timespec *rem)
+__ftruncate(const char *path, off_t length)
 {
-	return __syscall2(SYS_nanosleep, req, rem);
+	return __syscall2(SYS_ftruncate, path, length);
 }

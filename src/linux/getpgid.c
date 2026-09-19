@@ -37,7 +37,7 @@ __weak_alias(getpgid, _getpgid);
 #endif
 
 pid_t
-getpgid(pid_t pid)
+_getpgid(pid_t pid)
 {
 	return __syscall1(SYS_getpgid, pid);
 }

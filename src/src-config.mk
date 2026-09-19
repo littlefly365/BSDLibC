@@ -1,5 +1,5 @@
 SUBDIRS=string ctype linux gen stdlib stdio compat locale citrus citrus-modules iconv \
-	gdtoa termios regex thread-sub db time arch/amd64/gen cdb
+	gdtoa termios regex thread-sub db time arch/amd64/gen cdb nls
 
 ALL_C_SRCS := $(foreach dir,$(SUBDIRS),$(wildcard $(dir)/*.c))
 

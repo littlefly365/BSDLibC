@@ -58,6 +58,8 @@
 #define SYS_exit               60
 #define SYS_kill               62
 #define SYS_uname              63
+#define SYS_fsync              74
+#define SYS_truncate           76
 #define SYS_ftruncate          77
 #define SYS_getcwd             79
 #define SYS_chdir              80
@@ -81,10 +83,13 @@
 #define SYS_setregid           114
 #define SYS_getgroups          115
 #define SYS_getpgid            121
+#define SYS_statfs             137
+#define SYS_fstatfs            138
 #define SYS_chroot             161
 #define SYS_sync               162
 #define SYS_sethostname        170
 #define SYS_setdomainname      171
+#define SYS_statx              332
 #endif /* defined(__amd64__) || defined(__x86_64__) */
 
 #if defined(__amd64__) || defined(__x86_64__)

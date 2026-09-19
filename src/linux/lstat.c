@@ -27,14 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <sys/syscall.h>
-#include <sys/cdefs.h>
-#include <unistd.h>
-#include <time.h>
-#include <asm.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int
-__nanosleep50(const struct timespec *req, struct timespec *rem)
+__lstat50(const char *restrict path, struct stat *restrict buf)
 {
-	return __syscall2(SYS_nanosleep, req, rem);
+	return fstatat(AT_FDCWD, path, buf, AT_SYMLINK_NOFOLLOW);
 }

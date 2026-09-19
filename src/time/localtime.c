@@ -40,6 +40,8 @@ __RCSID("$NetBSD: localtime.c,v 1.155 2026/07/13 18:44:44 christos Exp $");
 #include "tzfile.h"
 #include <fcntl.h>
 
+#undef __LIBC12_SOURCE__
+
 /* Expose stuff for the benefit of strftime/libc12 */
 #define lclptr __lcl_ptr
 #define get_monotonic_time __lcl_get_monotonic_time

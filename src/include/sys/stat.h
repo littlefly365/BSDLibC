@@ -217,6 +217,8 @@ struct stat {
 #define	SF_LOG		0x00400000	/* WAPBL log file inode */
 #define	SF_SNAPINVAL	0x00800000	/* snapshot is invalid */
 
+#define STATX_BTIME	0x800U
+
 #ifdef _KERNEL
 /*
  * Shorthand abbreviations of above.
