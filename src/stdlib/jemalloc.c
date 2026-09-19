@@ -3308,6 +3308,8 @@ malloc_init_hard(void)
 	for (i = 0; i < 3; i++) {
 		/* Get runtime configuration. */
 		switch (i) {
+/* No malloc options */
+#if 0
 		case 0:
 			if ((linklen = readlink("/etc/malloc.conf", buf,
 			    sizeof(buf) - 1)) != -1) {
@@ -3349,6 +3351,7 @@ malloc_init_hard(void)
 				opts = buf;
 			}
 			break;
+#endif
 		default:
 			/* NOTREACHED */
 			/* LINTED */

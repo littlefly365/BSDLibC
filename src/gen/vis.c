@@ -81,6 +81,9 @@ __FBSDID("$FreeBSD$");
 __weak_alias(strvisx,_strvisx)
 #endif
 
+#define HAVE_VIS  0
+#define HAVE_SVIS 0
+
 #if !HAVE_VIS || !HAVE_SVIS
 #include <ctype.h>
 #include <limits.h>

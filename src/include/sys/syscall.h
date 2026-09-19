@@ -47,6 +47,7 @@
 #define SYS_writev             20
 #define SYS_access             21
 #define SYS_pipe               22
+#define SYS_mremap             25
 #define SYS_madvise            28
 #define SYS_dup                32
 #define SYS_dup2               33
@@ -90,6 +91,8 @@
 #define SYS_sync               162
 #define SYS_sethostname        170
 #define SYS_setdomainname      171
+#define SYS_getdents64         217
+#define SYS_utimensat          280
 #define SYS_statx              332
 #endif /* defined(__amd64__) || defined(__x86_64__) */
 

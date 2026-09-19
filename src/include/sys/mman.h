@@ -55,14 +55,13 @@ typedef	__off_t		off_t;		/* file offset */
 #define	off_t		__off_t
 #endif
 
-
 /*
  * Protections are chosen from these bits, or-ed together
  */
-#define	PROT_NONE	0x00	/* no permissions */
-#define	PROT_READ	0x01	/* pages can be read */
-#define	PROT_WRITE	0x02	/* pages can be written */
-#define	PROT_EXEC	0x04	/* pages can be executed */
+#define	PROT_NONE	0	/* no permissions */
+#define	PROT_READ	1	/* pages can be read */
+#define	PROT_WRITE	2	/* pages can be written */
+#define	PROT_EXEC	4	/* pages can be executed */
 
 #ifdef _NETBSD_SOURCE
 /*
@@ -78,8 +77,8 @@ typedef	__off_t		off_t;		/* file offset */
  * Flags contain sharing type and options.
  * Sharing types; choose one.
  */
-#define	MAP_SHARED	0x0001	/* share changes */
-#define	MAP_PRIVATE	0x0002	/* changes are private */
+#define	MAP_SHARED	0x01	/* share changes */
+#define	MAP_PRIVATE	0x02	/* changes are private */
 	/* old MAP_COPY	0x0004	   "copy" region at mmap time */
 
 /*
@@ -240,7 +239,7 @@ int	munlockall(void);
 int	madvise(void *, size_t, int);
 int	mincore(void *, size_t, char *);
 int	minherit(void *, size_t, int);
-void *	mremap(void *, size_t, void *, size_t, int);
+void *	mremap(void *, size_t, void *, int, int);
 int	memfd_create(const char *, unsigned int);
 #endif
 int	posix_madvise(void *, size_t, int);

@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2026, littlefly365
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- *
+ * 
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * 3. Neither the name of the copyright holder nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -29,60 +29,16 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <errno.h>
+#include <sys/time.h>
+#include <fcntl.h>
 #include <asm.h>
 
 #ifdef __weak_alias
-__weak_alias(mmap, _mmap);
+__weak_alias(utimensat, _utimensat);
 #endif
 
-void *
-_mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)
+int
+_utimensat(int fd, const char *path, const struct timespec times[2], int flags)
 {
-	unsigned int align;
-	size_t alignment;
-	size_t extra;
-	void *base;
-	uintptr_t b, aligned;
-
-	align = ((unsigned int)flags >> MAP_ALIGNMENT_SHIFT) & 0xff;
-	flags &= ~MAP_ALIGNMENT_MASK;
-
-	if (align == 0)
-		return (void*)__syscall6(SYS_mmap, addr, len, prot, flags, fd, offset);
-
-	alignment = (size_t)1 << align;
-	extra = alignment - getpagesize();
-
-	if (len > SIZE_MAX - extra) {
-		errno = ENOMEM;
-		return MAP_FAILED;
-	}
-
-	base = (void*)__syscall6(SYS_mmap, NULL, len + extra, prot, flags, fd, offset);
-	if (base == MAP_FAILED)
-		return MAP_FAILED;
-
-	b = (uintptr_t)base;
-	aligned = (b + alignment - 1) & ~(alignment - 1);
-
-	if (aligned != b) {
-		if (munmap((void*)b, aligned - b) == -1) {
-			munmap(base, len + extra);
-			return MAP_FAILED;
-		}
-	}
-
-	if (aligned + len < b + len + extra) {
-		if (munmap((void*)(aligned + len), (b + len + extra) - (aligned + len)) == -1) {
-			munmap((void*)aligned, len);
-			return MAP_FAILED;
-		}
-	}
-
-	return (void*)aligned;
+	return __syscall4(SYS_utimensat, fd, path, times, flags);
 }

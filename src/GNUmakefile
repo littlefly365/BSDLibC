@@ -58,5 +58,5 @@ clean:
 	$(MAKE) -C tests clean
 test: all
 	$(MAKE) CFLAGS="-nostdinc -ffreestanding -I$(CURDIR)/include -fno-stack-protector" \
-	LDFLAGS="-ffreestanding -nostdlib -L$(CURDIR) $(CURDIR)/csu/_start.o $(CURDIR)/csu/crt0.o -lc \
-	-static -fno-stack-protector" -C tests
+	LDFLAGS="-nostdlib -L$(CURDIR) $(CURDIR)/csu/_start.o $(CURDIR)/csu/crt0.o -lc \
+	-static" CPPFLAGS="$(CPPFLAGS)" -C tests

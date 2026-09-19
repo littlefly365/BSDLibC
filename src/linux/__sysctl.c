@@ -197,6 +197,10 @@ hw___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp, 
 	case HW_PAGESIZE:
 		*(int*)oldp = PAGE_SIZE;
 		break;
+	case HW_NCPU:
+	case HW_NCPUONLINE:
+		*(int*)oldp = 1;
+		break;
 	default:
 		errno = EINVAL;
 		return -1;

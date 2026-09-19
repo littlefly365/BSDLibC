@@ -1,13 +1,13 @@
 SUBDIRS=string ctype linux gen stdlib stdio compat locale citrus citrus-modules iconv \
-	gdtoa termios regex thread-sub db time arch/amd64/gen cdb nls tls
+	gdtoa termios regex thread-sub db time arch/amd64/gen cdb nls
 
-ALL_C_SRCS := $(foreach dir,$(SUBDIRS),$(wildcard $(dir)/*.c))
+ALL_C_SRCS := $(foreach dir,$(SUBDIRS),$(wildcard $(dir)/*.c)) $(CURDIR)/csu/libc_start.c
 
 GENERAL_INCLUDES := $(wildcard include/*.h)
 SYSTEM_INCLUDES := $(wildcard include/sys/*.h)
 MACHINE_INCLUDES := $(wildcard arch/$(MACHINE)/machine/*.h)
 
-ARCH_S := $(wildcard arch/amd64/gen/*.S)
+ARCH_S := $(wildcard arch/amd64/gen/*.S) $(wildcard arch/amd64/string/*.S)
 ALL_S_SRCS := $(ARCH_S)
 
 C_OBJS := $(ALL_C_SRCS:%.c=%.o)

@@ -84,6 +84,7 @@ void utrace(struct ut *, int);
 #endif /* __FreeBSD__ */
 
 #include <sys/types.h>
+
 #if defined(__NetBSD__)
 # define malloc_minsize               16U
 # ifdef _LIBC

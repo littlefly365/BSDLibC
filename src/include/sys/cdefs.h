@@ -73,6 +73,10 @@
 #define __has_extension		__has_feature /* Compat with pre-3.0 Clang */
 #endif
 
+#ifndef __NetBSD__
+#define __NetBSD__		1
+#endif
+
 #include <machine/cdefs.h>
 #include <sys/cdefs_elf.h>
 
