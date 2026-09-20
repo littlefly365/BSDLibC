@@ -1,7 +1,7 @@
-/*	$NetBSD: __sysctl.h,v 1.1 2025/05/02 23:04:56 riastradh Exp $	*/
+/* $NetBSD: crtn.S,v 1.1 2010/08/07 18:01:35 joerg Exp $ */
 
 /*-
- * Copyright (c) 2025 The NetBSD Foundation, Inc.
+ * Copyright (c) 2001 Ross Harvey
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -12,6 +12,13 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *	This product includes software developed by the NetBSD
+ *	Foundation, Inc. and its contributors.
+ * 4. Neither the name of The NetBSD Foundation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -26,16 +33,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	_LIBC_INCLUDE___SYSCTL_H_
-#define	_LIBC_INCLUDE___SYSCTL_H_
+#include <machine/asm.h>
 
-#include <stddef.h>
+RCSID("$NetBSD: crtn.S,v 1.1 2010/08/07 18:01:35 joerg Exp $")
 
-/*
- * Syscall stub, with no intervening library wrapper with user.* nodes.
- * Used by said library wrapper, by stack_protector.c setup logic for
- * kern.arandom, and by rtld for ld.so.conf interpretation.
- */
-int __sysctl(const int *, unsigned, void *, size_t *, const void *, size_t);
+	.section ".init", "ax", @progbits
+	addq	$8, %rsp
+	ret
 
-#endif	/* _LIBC_INCLUDE___SYSCTL_H_ */
+	.section ".fini", "ax", @progbits
+	addq	$8, %rsp
+	ret

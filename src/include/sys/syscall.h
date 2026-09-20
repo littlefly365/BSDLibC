@@ -95,6 +95,7 @@
 #define SYS_setdomainname      171
 #define SYS_getdents64         217
 #define SYS_utimensat          280
+#define SYS_getrandom          318
 #define SYS_statx              332
 #endif /* defined(__amd64__) || defined(__x86_64__) */
 

@@ -80,6 +80,8 @@ __libc_tls_get_addr(void)
 
 __weak_alias(_rtld_tls_allocate, __libc_rtld_tls_allocate)
 
+	static const char map_failed[] = "el resultado de mmap es MAP_FAILED\n";
+	static const char null_msg[] = "p es NULL\n";
 struct tls_tcb *
 _rtld_tls_allocate(void)
 {
@@ -95,7 +97,7 @@ _rtld_tls_allocate(void)
 
 		initial_thread_tcb = p = mmap(NULL,
 		    tls_allocation + sizeof(*tcb), PROT_READ | PROT_WRITE,
-		    MAP_ANON, -1, 0);
+		    MAP_ANON | MAP_PRIVATE, -1, 0);
 		if (p == MAP_FAILED)
 			initial_thread_tcb = p = NULL;
 	} else {

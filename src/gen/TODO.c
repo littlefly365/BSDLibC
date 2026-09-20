@@ -17,10 +17,40 @@ void _lwp_self(void)
 {
 }
 
+void utrace(void)
+{
+}
+
+void _lwp_setprivate(void)
+{
+}
+
+void __dl_iterate_phdr(void)
+{
+}
+
+extern void _exit(int status);
+
+void __socket30(void)
+{
+}
+
+void _send(void)
+{
+}
+
+void connect(void)
+{
+}
+
 void __sigprocmask14(void)
 {
 }
 
-void utrace(void)
+void __sigaction_sigtramp(void)
+{
+}
+
+void __sigtramp_siginfo_2(void)
 {
 }

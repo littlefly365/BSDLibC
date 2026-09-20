@@ -47,7 +47,7 @@ void xprintf(const char *fmt, ...);
 #include <stdlib.h>
 #endif
 
-#include "../include/__sysctl.h"
+#include "../internal/__sysctl.h"
 
 long __stack_chk_guard[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static void __fail(const char *) __attribute__((__noreturn__));
