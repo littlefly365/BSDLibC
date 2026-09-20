@@ -319,6 +319,15 @@ relocate_self(struct ps_strings *ps_strings)
 }
 #endif
 
+/*
+ * The way the kernel gives the parameters to the binaries
+ * is different bettween both systems. So in BSDLibC
+ * pre___start is called first to give the parameters
+ * to the __start function as is expected in
+ * in NetBSD.
+*/
+
+#if defined(__linux__)
 void
 pre___start(void *p)
 {
@@ -336,6 +345,7 @@ pre___start(void *p)
 
 	___start(NULL, &ps_strings);
 }
+#endif
 
 void
 ___start(void (*cleanup)(void),			/* from shared loader */

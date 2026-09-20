@@ -1,9 +1,12 @@
-// TODO
+/*
+ * These functions are not implemented yet and
+ * other parts of the libc required them so make
+ * empty functions to resolve the symbols
+*/
+
 void pathconf(void)
 {
 }
-
-void* __dl_cxa_refcount;
 
 void _sys_sched_yield(void)
 {
