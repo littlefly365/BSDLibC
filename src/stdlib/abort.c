@@ -49,7 +49,6 @@ static int aborting = 0;
 void
 abort(void)
 {
-#if 0
 	sigset_t mask;
 
 	sigfillset(&mask);
@@ -81,6 +80,5 @@ abort(void)
 	(void)signal(SIGABRT, SIG_DFL);
 	(void)sigprocmask(SIG_SETMASK, &mask, (sigset_t *)NULL);
 	(void)raise(SIGABRT);
-#endif
 	_exit(1);
 }
