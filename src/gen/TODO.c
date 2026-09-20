@@ -25,12 +25,6 @@ void _lwp_setprivate(void)
 {
 }
 
-void __dl_iterate_phdr(void)
-{
-}
-
-extern void _exit(int status);
-
 void __socket30(void)
 {
 }
