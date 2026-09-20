@@ -1,6 +1,6 @@
 SUBDIRS_C_SOURCE=string linux gen stdlib stdio compat locale citrus citrus-modules iconv \
 		gdtoa termios regex thread-sub db time arch/amd64/gen cdb nls
-SUBDIRS_S_SOURCE=gen string stdlib
+SUBDIRS_S_SOURCE=gen string stdlib atomic
 
 ALL_C_SRCS := $(foreach dir,$(SUBDIRS_C_SOURCE),$(wildcard $(dir)/*.c)) $(CURDIR)/csu/libc_start.c
 ALL_S_SRCS := $(foreach dir,$(SUBDIRS_S_SOURCE),$(wildcard arch/amd64/$(dir)/*.S))

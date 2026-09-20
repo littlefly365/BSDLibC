@@ -60,6 +60,7 @@
 #define SYS_wait4              61
 #define SYS_kill               62
 #define SYS_uname              63
+#define SYS_fcntl              72
 #define SYS_fsync              74
 #define SYS_truncate           76
 #define SYS_ftruncate          77
@@ -74,6 +75,7 @@
 #define SYS_chown              92
 #define SYS_fchown             93
 #define SYS_lchown             94
+#define SYS_umask              95
 #define SYS_getrlimit          97
 #define SYS_getuid             102
 #define SYS_getgid             104

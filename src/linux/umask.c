@@ -29,15 +29,15 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <sys/wait.h>
+#include <sys/stat.h>
 #include <asm.h>
 
 #ifdef __weak_alias
-__weak_alias(waitpid, _waitpid);
+__weak_alias(umask, _umask);
 #endif
 
-pid_t
-_waitpid(pid_t pid, int *status, int opts)
+mode_t
+_umask(mode_t mode)
 {
-	return __syscall4(SYS_wait4, pid, status, opts, 0);
+	return __syscall1(SYS_umask, mode);
 }

@@ -13,11 +13,11 @@ MACHINE_HOST := $(shell uname -m)
 MACHINE ?= $(MACHINE_HOST)
 
 CFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-stack-protector
-CFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE
+CFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE -DNLS
 CFLAGS+=-I$(CURDIR)/include -fPIC -I$(CURDIR)/internal -I$(CURDIR)/stdlib \
 	-I$(CURDIR)/locale -I$(CURDIR)/citrus -I$(CURDIR)/gen -I$(CURDIR)/csu \
 	-I$(CURDIR)
-LDFLAGS+=-nostdlib -ffreestanding -fno-stack-protector -Wl,-soname,lib$(LIBNAME)$(SO_SUFFIX).$(major) -static
+LDFLAGS+=-nostdlib -ffreestanding -fno-stack-protector -static
 
 -include src-config.mk
 
@@ -28,6 +28,8 @@ $(LIB_DYNAMIC): $(ALL_OBJS)
 $(LIB_STATIC): $(ALL_OBJS)
 	$(AR) rcs -o $@ $(ALL_OBJS)
 %.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
+%.o: %.S
 	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
 csu-obj:
 	$(MAKE) -C csu all
