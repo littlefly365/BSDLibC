@@ -5,7 +5,7 @@ BSDLibC is an experimental port of the NetBSD libc for Linux.
 - support for x86_64
 - A functional stdio
 - Syscall wrappers
-- A crt* objects from NetBSD
+- The crt* objects from NetBSD
 - Malloc and friends (jemalloc)
 - String functions
 - argc, argv and envp supported
