@@ -36,6 +36,7 @@
 #define _NETBSD_SOURCE
 #include <sys/utsname.h>	/* We need for SYS_NMLN */
 #include <sys/param.h>		/* MACHINE and MACHINE_ARCH */
+#include <sys/random.h>
 #include <sys/syscall.h>
 #include <sys/sysctl.h>
 #include <unistd.h>
@@ -139,6 +140,9 @@ kern___sysctl(const int *name, unsigned int namelen, void *oldp, size_t *oldlenp
 			return -1;
 		close(fd);
 		break;
+	case KERN_ARND:
+		if (getrandom(oldp, *oldlenp, 0) < 0)
+			return -1;	
 	default:
 		errno = EINVAL;
 		return -1;
