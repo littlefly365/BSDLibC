@@ -1,10 +1,9 @@
-TESTS=revoke uname hello hostname
+TESTS=cat chmod kill sleep stat ls
 
 all: $(TESTS)
 
 $(TESTS):
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $@.c
-	$(CC) -o $@ $@.o $(LDFLAGS)
+	$(CC) -o $@ $(CFLAGS) $(CPPFLAGS) $@.c $(LDFLAGS)
 clean:
 	rm -rf $(TESTS) *.o
 .PHONY: all clean
