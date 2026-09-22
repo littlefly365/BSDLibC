@@ -1,6 +1,6 @@
 SUBDIRS_C_SOURCE=string sys gen stdlib stdio compat locale citrus citrus-modules iconv \
 		gdtoa termios regex thread-sub db time arch/amd64/gen cdb nls misc atomic \
-		tls dlfcn
+		tls dlfcn net math util hash quad
 
 SUBDIRS_S_SOURCE=gen string stdlib atomic
 
