@@ -29,30 +29,14 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <sys/param.h>
-#include <string.h>
 #include <unistd.h>
-#include <errno.h>
+#include <time.h>
 #include <asm.h>
 
-#define cwd_check(exp, buf) ((exp) > 0 && buf[0] == '/')
+#define SYS_clock_gettime 228
 
-#ifdef __weak_alias
-__weak_alias(getcwd, _getcwd);
-#endif
-
-char *
-_getcwd(char *buf, size_t size)
+int
+__clock_gettime50(clockid_t clk, struct timespec *ts)
 {
-	if (!size && buf) {
-		errno = EINVAL;
-		return NULL;
-	} if (!buf) {
-		char cwd[MAXPATHLEN];
-		if (cwd_check(__syscall2(SYS_getcwd, cwd, MAXPATHLEN), cwd))
-			return strdup(cwd);
-	} else if (cwd_check(__syscall2(SYS_getcwd, buf, size), buf))
-		return buf;
-	errno = ENOENT;
-	return NULL;
+	return __syscall2(SYS_clock_gettime, clk, ts);
 }

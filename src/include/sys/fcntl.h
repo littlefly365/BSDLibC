@@ -113,7 +113,7 @@
 #endif
 
 #define	O_DIRECTORY	0x00200000	/* fail if not a directory */
-#define	O_CLOEXEC	0x00400000	/* set close on exec */
+#define	O_CLOEXEC	(1 << 19)	/* set close on exec */
 #if (_POSIX_C_SOURCE - 0) >= 200809L || (_XOPEN_SOURCE - 0 >= 700) || \
     defined(_NETBSD_SOURCE)
 #define	O_SEARCH	0x00800000	/* skip search permission checks */

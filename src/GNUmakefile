@@ -13,7 +13,7 @@ MACHINE_HOST := $(shell uname -m)
 MACHINE ?= $(MACHINE_HOST)
 
 CFLAGS+=-nostdlib -nostdinc -ffreestanding -fno-stack-protector
-CFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE -DNLS
+CFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE -DNLS -D__ELF__ -D_LIBC_INTERNAL
 CFLAGS+=-I$(CURDIR)/include -fPIC -I$(CURDIR)/internal -I$(CURDIR)/stdlib \
 	-I$(CURDIR)/locale -I$(CURDIR)/citrus -I$(CURDIR)/gen -I$(CURDIR)/csu \
 	-I$(CURDIR)

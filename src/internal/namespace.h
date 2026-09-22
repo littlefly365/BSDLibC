@@ -48,6 +48,7 @@
 #define fileno		_fileno
 #endif /* _REENTRANT */
 #define fork		_fork
+#define vfork		_vfork
 #define fseeko		_fseeko
 #define ftello		_ftello
 #define getcontext	_getcontext

@@ -29,12 +29,17 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <asm.h>
 
-__strong_alias(__vfork14, __fork);
-pid_t
-__fork(void)
+#ifdef __weak_alias
+__weak_alias(lchmod, _lchmod);
+#endif
+
+int
+_lchmod(const char *path, mode_t mode)
 {
-	return __syscall0(SYS_fork);
+	return fchmodat(AT_FDCWD, path, mode, AT_SYMLINK_NOFOLLOW);
 }
+

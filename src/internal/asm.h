@@ -3,6 +3,7 @@
 
 #define __long(var)	((long)var)
 
+#if defined(__x86_64__) || defined(__amd64__)
 #define __syscall0(n) ({								\
 	unsigned long ret;								\
 	__asm__ __volatile__ ("syscall" : "=a"(ret) : "a"(n) : "rcx", "r11", "memory");	\
@@ -60,4 +61,5 @@
 	__long(ret);									\
 })
 
+#endif
 #endif

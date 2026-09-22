@@ -287,7 +287,7 @@ void	 sync(void);
 useconds_t ualarm(useconds_t, useconds_t);
 int	 usleep(useconds_t);
 #ifndef __LIBC12_SOURCE__
-pid_t	 vfork(void) __RENAME(__vfork14) __returns_twice;
+pid_t	 vfork(void) __returns_twice;
 #endif
 
 #ifndef __AUDIT__
@@ -425,6 +425,7 @@ extern	 char *suboptarg;	/* getsubopt(3) external variable */
 #ifdef _LIBC_INTERNAL
 pid_t	__fork(void);
 pid_t	__locked_fork(int *) __weak;
+pid_t	__vfork(void)  __RENAME(__vfork14);
 #endif
 
 __END_DECLS

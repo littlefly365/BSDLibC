@@ -47,6 +47,7 @@
 #define SYS_writev             20
 #define SYS_access             21
 #define SYS_pipe               22
+#define SYS_sched_yield        24
 #define SYS_mremap             25
 #define SYS_madvise            28
 #define SYS_dup                32
@@ -55,6 +56,7 @@
 #define SYS_nanosleep          35
 #define SYS_getpid             39
 #define SYS_fork               57
+#define SYS_vfork              58
 #define SYS_execve             59
 #define SYS_exit               60
 #define SYS_wait4              61
@@ -72,6 +74,8 @@
 #define SYS_link               86
 #define SYS_unlink             87
 #define SYS_readlink           89
+#define SYS_chmod              90
+#define SYS_fchmod             91
 #define SYS_chown              92
 #define SYS_fchown             93
 #define SYS_lchown             94
@@ -94,9 +98,12 @@
 #define SYS_sethostname        170
 #define SYS_setdomainname      171
 #define SYS_getdents64         217
+#define SYS_clock_nanosleep    230
+#define SYS_fchmodat           268
 #define SYS_utimensat          280
 #define SYS_getrandom          318
 #define SYS_statx              332
+#define SYS_fchmodat2          452
 #endif /* defined(__amd64__) || defined(__x86_64__) */
 
 #if defined(__amd64__) || defined(__x86_64__)

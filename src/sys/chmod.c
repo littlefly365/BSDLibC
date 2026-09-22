@@ -29,12 +29,16 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <unistd.h>
+#include <sys/stat.h>
 #include <asm.h>
 
-__strong_alias(__vfork14, __fork);
-pid_t
-__fork(void)
+#ifdef __weak_alias
+__weak_alias(chmod, _chmod);
+#endif
+
+int
+_chmod(const char *path, mode_t mode)
 {
-	return __syscall0(SYS_fork);
+	return __syscall2(SYS_chmod, path, mode);
 }
+
