@@ -92,6 +92,7 @@
 #define SYS_getgroups          115
 #define SYS_getpgid            121
 #define SYS_rt_sigsuspend      130
+#define SYS_mknod              133
 #define SYS_statfs             137
 #define SYS_fstatfs            138
 #define SYS_chroot             161
