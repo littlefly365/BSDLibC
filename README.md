@@ -1,5 +1,5 @@
 # BSDLibC
-BSDLibC is an experimental port of the NetBSD libc for Linux.
+BSDLibC is an experimental port of the NetBSD libc (and maybe other basic libs) for Linux.
 
 # Whats available?
 - support for x86_64
@@ -10,7 +10,7 @@ BSDLibC is an experimental port of the NetBSD libc for Linux.
 - BSD extensions
 
 # Achievements
-- Build a run simple commands like hello world, uname and hostname.
+- Build and run commands from NetBSD like stat, chmod, kill, uname...
 
 # Goals
 - Build gcc and other GNU projects

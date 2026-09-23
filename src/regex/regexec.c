@@ -141,7 +141,7 @@ xmbrtowc_dummy(wint_t *wi,
 /* function names */
 #define SNAMES			/* engine.c looks after details */
 
-#include "engine.inc"
+#include "engine.c"
 
 /* now undo things */
 #undef	states
@@ -195,7 +195,7 @@ xmbrtowc_dummy(wint_t *wi,
 /* function names */
 #define	LNAMES			/* flag */
 
-#include "engine.inc"
+#include "engine.c"
 
 /* multibyte character & large states version */
 #undef	LNAMES
@@ -205,7 +205,7 @@ xmbrtowc_dummy(wint_t *wi,
 #define	ZAPSTATE(mbs)	memset((mbs), 0, sizeof(*(mbs)))
 #define	MNAMES
 
-#include "engine.inc"
+#include "engine.c"
 
 /*
  - regexec - interface for matching

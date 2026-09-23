@@ -22,3 +22,6 @@ void __nsdefaultnis_forceall(){}
 void __nsdefaultsrc(){}
 void _nsdispatch(){}
 void minherit(){}
+void posix_spawn(){}
+void _lwp_unpark(){}
+void ___lwp_park60(){}
