@@ -334,8 +334,8 @@ struct flock {
 #define	AT_EACCESS		0x200	/* Use euig/egid for access checks */
 
 #define AT_NO_AUTOMOUNT		0x800
+#define AT_EMPTY_PATH		0x1000
 #endif
-
 
 #ifndef _KERNEL
 #include <sys/cdefs.h>

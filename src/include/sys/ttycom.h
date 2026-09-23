@@ -84,6 +84,11 @@ struct ptmget {
 	char	sn[PATH_MAX];
 };
 
+#define TCGETS		0x5401
+#define TCSETS		0x5402
+#define TCSETSW		0x5403
+#define TCSETSF		0x5404
+
 #define _PATH_PTMDEV	"/dev/ptm"
 
 #define		TIOCM_LE	0001		/* line enable */
@@ -103,10 +108,10 @@ struct ptmget {
 						/* 15 unused */
 #define	TIOCFLUSH	_IOW('t', 16, int)	/* flush buffers */
 						/* 17-18 compat */
-#define	TIOCGETA	_IOR('t', 19, struct termios) /* get termios struct */
-#define	TIOCSETA	_IOW('t', 20, struct termios) /* set termios struct */
-#define	TIOCSETAW	_IOW('t', 21, struct termios) /* drain output, set */
-#define	TIOCSETAF	_IOW('t', 22, struct termios) /* drn out, fls in, set */
+#define	TIOCGETA	TCGETS			/* get termios struct */
+#define	TIOCSETA	TCSETS			/* set termios struct */
+#define	TIOCSETAW	TCSETSW			/* drain output, set */
+#define	TIOCSETAF	TCSETSF			/* drn out, fls in, set */
 #define	TIOCGETD	_IOR('t', 26, int)	/* get line discipline (deprecated) */
 #define	TIOCSETD	_IOW('t', 27, int)	/* set line discipline (deprecated) */
 

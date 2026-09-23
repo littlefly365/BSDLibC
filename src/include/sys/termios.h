@@ -194,9 +194,14 @@ struct termios {
 	tcflag_t	c_oflag;	/* output flags */
 	tcflag_t	c_cflag;	/* control flags */
 	tcflag_t	c_lflag;	/* local flags */
+	cc_t		c_line;
 	cc_t		c_cc[NCCS];	/* control chars */
-	int		c_ispeed;	/* input speed */
-	int		c_ospeed;	/* output speed */
+/* change int to speed_t */
+	speed_t		__c_ispeed;	/* input speed */
+	speed_t		__c_ospeed;	/* output speed */
+
+#define c_ispeed	__c_ispeed
+#define c_ospeed	__c_ospeed
 };
 
 /*

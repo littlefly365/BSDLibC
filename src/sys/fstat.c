@@ -33,5 +33,5 @@
 int
 __fstat50(int fd, struct stat *restrict buf)
 {
-	return fstatat(fd, "", buf, 0);
+	return fstatat(fd, "", buf, AT_EMPTY_PATH);
 }

@@ -25,3 +25,4 @@ void minherit(){}
 void posix_spawn(){}
 void _lwp_unpark(){}
 void ___lwp_park60(){}
+void __guard_setup(){}

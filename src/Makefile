@@ -1,6 +1,6 @@
 LIB=c
 
-CPPFLAGS+=-nostdinc -ffreestanding -fPIC
+CPPFLAGS+=-nostdinc -ffreestanding -fPIC -fno-stack-protector
 CPPFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE -DNLS -D__ELF__ -D_LIBC_INTERNAL
 CPPFLAGS+=-I${.CURDIR} -I${.CURDIR}/include -I${.CURDIR}/internal -I${.CURDIR}/citrus \
           -I${.CURDIR}/csu -I${.CURDIR}/stdlib -I${.CURDIR}/locale -I${.CURDIR}/ld.elf_so \
