@@ -129,7 +129,7 @@ done:
 
 int
 #ifdef _LIBC
-__pw_scan(char *bp, struct passwd *pw, int *flags)
+__pw_scan50(char *bp, struct passwd *pw, int *flags)
 #else
 pw_scan( char *bp, struct passwd *pw, int *flags)
 #endif

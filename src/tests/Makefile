@@ -1,4 +1,4 @@
-PROGS=env id
+PROGS=env id logname
 
 CPPFLAGS=-nostdinc -I../include -fno-stack-protector
 LDFLAGS=-nostdlib -L.. -lc -static

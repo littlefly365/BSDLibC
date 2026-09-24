@@ -3,8 +3,7 @@ LIB=c
 CPPFLAGS+=-nostdinc -ffreestanding -fPIC -fno-stack-protector
 CPPFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE -DNLS -D__ELF__ -D_LIBC_INTERNAL
 CPPFLAGS+=-I${.CURDIR} -I${.CURDIR}/include -I${.CURDIR}/internal -I${.CURDIR}/citrus \
-          -I${.CURDIR}/csu -I${.CURDIR}/stdlib -I${.CURDIR}/locale -I${.CURDIR}/ld.elf_so \
-          -I${.CURDIR}/gen
+          -I${.CURDIR}/csu -I${.CURDIR}/stdlib -I${.CURDIR}/locale -I${.CURDIR}/gen
 LDFLAGS+=-nostdlib
 
 test:
@@ -25,6 +24,7 @@ test:
 .include "${.CURDIR}/math/Makefile.inc"
 .include "${.CURDIR}/md/Makefile.inc"
 .include "${.CURDIR}/misc/Makefile.inc"
+.include "${.CURDIR}/net/Makefile.inc"
 .include "${.CURDIR}/nls/Makefile.inc"
 .include "${.CURDIR}/quad/Makefile.inc"
 .include "${.CURDIR}/regex/Makefile.inc"
