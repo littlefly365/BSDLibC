@@ -7,4 +7,4 @@ SRCS+=__sysctl.c _exit.c access.c brk.c chdir.c chown.c chroot.c close.c dup.c d
       pipe.c pread.c pwrite.c read.c readlink.c readv.c rmdir.c sbrk.c setpgid.c setregid.c setreuid.c \
       stat.c statvfs.c sync.c truncate.c unlink.c utimensat.c waitpid.c write.c writev.c umask.c fcntl.c \
       getrandom.c __sigaction_siginfo.c gettimeofday.c _sys_sched_yield.c utrace.c chmod.c fchmod.c \
-      fchmodat.c lchmod.c clock_gettime.c clock_nanosleep.c __getcwd.c sigsuspend.c
+      fchmodat.c lchmod.c clock_gettime.c clock_nanosleep.c __getcwd.c sigsuspend.c getlogin.c setlogin.c

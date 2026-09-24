@@ -5,7 +5,10 @@ CPPFLAGS+=-D_LIBC -D_REENTRANT -D__DBINTERFACE_PRIVATE -DNLS -D__ELF__ -D_LIBC_I
 CPPFLAGS+=-I${.CURDIR} -I${.CURDIR}/include -I${.CURDIR}/internal -I${.CURDIR}/citrus \
           -I${.CURDIR}/csu -I${.CURDIR}/stdlib -I${.CURDIR}/locale -I${.CURDIR}/ld.elf_so \
           -I${.CURDIR}/gen
-LDFLAGS+=-nostdlib -ffreestanding
+LDFLAGS+=-nostdlib
+
+test:
+	$(MAKE) -C tests all
 
 .include "${.CURDIR}/arch/Makefile.inc"
 .include "${.CURDIR}/atomic/Makefile.inc"

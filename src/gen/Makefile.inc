@@ -11,4 +11,5 @@ SRCS+=TODO.c _errno.c alphasort.c assert.c basename.c closedir.c ctype_.c dehuma
       warn.c warnc.c warnx.c xsyslog.c fnmatch.c ftw.c setmode.c nftw.c isctype.c isascii.c \
       humanize_number.c toascii.c fstab.c getcap.c signalname.c signalnext.c signalnumber.c \
       signame.c utmp.c utmpx.c lockf.c ptree.c radixtree.c rpst.c sigsetops.c posix_spawn_sched.c \
-      getcwd.c devname.c getdevmajor.c sysctlbyname.c sysctlnametomib.c arc4random.c pthread_atfork.c
+      getcwd.c devname.c getdevmajor.c sysctlbyname.c sysctlnametomib.c arc4random.c pthread_atfork.c \
+      getgrouplist.c getgroupmembership.c
