@@ -32,7 +32,6 @@
 #include <unistd.h>
 #include <asm.h>
 
-__strong_alias(__vfork14, __fork);
 pid_t
 __fork(void)
 {

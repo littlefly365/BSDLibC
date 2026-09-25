@@ -52,6 +52,7 @@ __RCSID("$NetBSD: pthread_atfork.c,v 1.28 2025/05/06 23:18:27 riastradh Exp $");
 __weak_alias(pthread_atfork, _pthread_atfork)
 __weak_alias(fork, _fork)
 __weak_alias(vfork, _vfork)
+__weak_alias(_vfork, __vfork14)
 #endif /* __weak_alias */
 
 pid_t
@@ -303,7 +304,7 @@ fork(void)
 }
 
 pid_t
-vfork(void)
+__vfork(void)
 {
-	return __vfork();
+	return fork();
 }
