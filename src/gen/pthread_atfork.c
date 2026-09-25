@@ -304,7 +304,7 @@ fork(void)
 }
 
 pid_t
-__vfork(void)
+__vfork14(void)
 {
 	return fork();
 }
