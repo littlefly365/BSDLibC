@@ -1,4 +1,4 @@
-PROGS=env id logname uname
+PROGS=env id logname uname nproc
 
 CPPFLAGS=-nostdinc -I../include -fno-stack-protector
 LDFLAGS=-nostdlib -L.. -lc -static
