@@ -102,6 +102,7 @@
 #define SYS_setdomainname      171
 #define SYS_getdents64         217
 #define SYS_clock_nanosleep    230
+#define SYS_exit_group         231
 #define SYS_fchmodat           268
 #define SYS_utimensat          280
 #define SYS_getrandom          318

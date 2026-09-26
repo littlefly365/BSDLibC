@@ -351,6 +351,7 @@ get_from_file(const char *path, char *buf, size_t len)
 	if ((nl = read(fd, buf, len)) <= 0)
 		return -1;
 
+	close(fd);
 	buf[nl] = '\0';
 
 	if ((str = strrchr(buf, '\n')) != NULL)
