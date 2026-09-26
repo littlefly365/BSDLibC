@@ -30,10 +30,10 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 pid_t
 __fork(void)
 {
-	return __syscall0(SYS_fork);
+	return syscall(SYS_fork);
 }

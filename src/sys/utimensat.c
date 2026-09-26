@@ -30,8 +30,9 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/time.h>
+#include <unistd.h>
 #include <fcntl.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(utimensat, _utimensat);
@@ -40,5 +41,5 @@ __weak_alias(utimensat, _utimensat);
 int
 _utimensat(int fd, const char *path, const struct timespec times[2], int flags)
 {
-	return __syscall4(SYS_utimensat, fd, path, times, flags);
+	return syscall(SYS_utimensat, fd, path, times, flags);
 }

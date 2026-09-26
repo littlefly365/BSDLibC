@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(readlink, _readlink);
@@ -39,5 +39,5 @@ __weak_alias(readlink, _readlink);
 ssize_t
 _readlink(const char *path, char *buf, size_t count)
 {
-	return __syscall3(SYS_readlink, path, buf, count);
+	return syscall(SYS_readlink, path, buf, count);
 }

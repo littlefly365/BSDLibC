@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(link, _link);
@@ -39,5 +39,5 @@ __weak_alias(link, _link);
 int
 _link(const char *file1, const char *file2)
 {
-	return __syscall2(SYS_link, file1, file2);
+	return syscall(SYS_link, file1, file2);
 }

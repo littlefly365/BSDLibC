@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(execve, _execve);
@@ -39,5 +39,5 @@ __weak_alias(execve, _execve);
 int
 _execve(const char *path, char *const argv[], char *const envp[])
 {
-	return __syscall3(SYS_execve, path, argv, envp);
+	return syscall(SYS_execve, path, argv, envp);
 }

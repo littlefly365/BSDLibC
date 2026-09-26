@@ -30,10 +30,10 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/stat.h>
-#include <asm.h>
+#include "libc.h"
 
 int
 __mknod50(const char *path, mode_t mode, dev_t dev)
 {
-	return __syscall3(SYS_mknod, path, mode, dev);
+	return syscall(SYS_mknod, path, mode, dev);
 }

@@ -29,13 +29,14 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
+#include <unistd.h>
 #include <time.h>
-#include <asm.h>
+#include "libc.h"
 
 int
 clock_nanosleep(clockid_t clk, int flags, const struct timespec *req, struct timespec *rem)
 {
 	if (clk == CLOCK_REALTIME && !flags)
-		return -__syscall2(SYS_nanosleep, req, rem);
-	return -__syscall4(SYS_clock_nanosleep, clk, flags, req, rem);
+		return -syscall(SYS_nanosleep, req, rem);
+	return -syscall(SYS_clock_nanosleep, clk, flags, req, rem);
 }

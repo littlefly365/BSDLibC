@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(rename, _rename);
@@ -40,5 +40,5 @@ __strong_alias(__posix_rename, _rename)
 int
 _rename(const char *from, const char *to)
 {
-	return __syscall2(SYS_rename, from, to);
+	return syscall(SYS_rename, from, to);
 }

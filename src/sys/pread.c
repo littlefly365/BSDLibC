@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(pread, _pread);
@@ -39,5 +39,5 @@ __weak_alias(pread, _pread);
 ssize_t
 _pread(int fd, void *buf, size_t count, off_t offs)
 {
-	return __syscall4(SYS_pread64, fd, buf, count, offs);
+	return syscall(SYS_pread64, fd, buf, count, offs);
 }

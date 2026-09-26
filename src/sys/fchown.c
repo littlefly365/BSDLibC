@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(fchown, _fchown);
@@ -39,5 +39,5 @@ __weak_alias(fchown, _fchown);
 int
 _fchown(int fd, uid_t uid, gid_t gid)
 {
-	return __syscall3(SYS_fchown, fd, uid, gid);
+	return syscall(SYS_fchown, fd, uid, gid);
 }

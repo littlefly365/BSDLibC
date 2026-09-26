@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/uio.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(pwrite, _pwrite);
@@ -39,5 +40,5 @@ __weak_alias(pwrite, _pwrite);
 ssize_t
 _pwrite(int fd, const void *buf, size_t count, off_t offs)
 {
-	return __syscall4(SYS_pwrite64, fd, buf, count, offs);
+	return syscall(SYS_pwrite64, fd, buf, count, offs);
 }

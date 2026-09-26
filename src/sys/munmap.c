@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/mmap.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(munmap, _munmap);
@@ -39,5 +40,5 @@ __weak_alias(munmap, _munmap);
 int
 _munmap(void *start, size_t len)
 {
-	return __syscall2(SYS_munmap, start, len);
+	return syscall(SYS_munmap, start, len);
 }

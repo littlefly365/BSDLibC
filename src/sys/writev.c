@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/uio.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(writev, _writev);
@@ -39,5 +40,5 @@ __weak_alias(writev, _writev);
 ssize_t
 _writev(int fd, const struct iovec *iov, int count)
 {
-	return __syscall3(SYS_writev, fd, iov, count);
+	return syscall(SYS_writev, fd, iov, count);
 }

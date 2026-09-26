@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(access, _access);
@@ -39,5 +39,5 @@ __weak_alias(access, _access);
 int
 _access(const char *path, int mode)
 {
-	return __syscall2(SYS_access, path, mode);
+	return syscall(SYS_access, path, mode);
 }

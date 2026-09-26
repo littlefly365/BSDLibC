@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(setpgid, _setpgid);
@@ -39,5 +39,5 @@ __weak_alias(setpgid, _setpgid);
 int
 _setpgid(pid_t pid, pid_t pgid)
 {
-	return __syscall2(SYS_setpgid, pid, pgid);
+	return syscall(SYS_setpgid, pid, pgid);
 }

@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(setregid, _setregid);
@@ -39,5 +39,5 @@ __weak_alias(setregid, _setregid);
 int
 _setregid(gid_t rgid, gid_t egid)
 {
-	return __syscall2(SYS_setregid, rgid, egid);
+	return syscall(SYS_setregid, rgid, egid);
 }

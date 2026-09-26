@@ -28,11 +28,12 @@
 */
 
 #include <sys/syscall.h>
+#include <unistd.h>
 #include <sched.h>
-#include <asm.h>
+#include "libc.h"
 
 int
 _sys_sched_yield(void)
 {
-	return __syscall0(SYS_sched_yield);
+	return syscall(SYS_sched_yield);
 }

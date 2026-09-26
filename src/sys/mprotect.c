@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #include <machine/vmparam.h>
 
@@ -46,5 +46,5 @@ _mprotect(void *addr, size_t len, int prot)
 	start = (size_t)addr & -PAGE_SIZE;
 	end = (size_t)((char *)addr + len + PAGE_SIZE-1) & -PAGE_SIZE;
 
-	return __syscall3(SYS_mprotect, start, end - start, prot);
+	return syscall(SYS_mprotect, start, end - start, prot);
 }

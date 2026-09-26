@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(sync, _sync);
@@ -39,5 +39,5 @@ __weak_alias(sync, _sync);
 void
 _sync(void)
 {
-	__syscall0(SYS_sync);
+	(void)syscall(SYS_sync);
 }

@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/stat.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(chmod, _chmod);
@@ -39,6 +40,6 @@ __weak_alias(chmod, _chmod);
 int
 _chmod(const char *path, mode_t mode)
 {
-	return __syscall2(SYS_chmod, path, mode);
+	return syscall(SYS_chmod, path, mode);
 }
 

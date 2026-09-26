@@ -30,10 +30,11 @@
 #include <sys/syscall.h>
 #include <sys/statvfs.h>
 #include <sys/cdefs.h>
+#include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include <asm.h>
 
+#include "libc.h"
 #include "magic.h"
 
 struct statvfs_linux {
@@ -96,13 +97,8 @@ static const char
 }
 
 static int
-__vfs(struct statvfs *restrict buf, struct statvfs_linux *restrict vfs_linux, int ret)
+__vfs(struct statvfs *restrict buf, struct statvfs_linux *restrict vfs_linux)
 {
-	if (ret != 0) {
-		errno -ret;
-		return ret;
-	}
-
 	buf->f_flag = vfs_linux->f_flag;
 	buf->f_bsize = vfs_linux->f_bsize;
 	buf->f_frsize = vfs_linux->f_frsize;
@@ -139,17 +135,17 @@ __vfs(struct statvfs *restrict buf, struct statvfs_linux *restrict vfs_linux, in
 int
 __statvfs190(const char *restrict path, struct statvfs *restrict buf, int flags __unused)
 {
-	struct statvfs_linux *vfs_linux = {0};
-	int ret = __syscall2(SYS_statfs, path, vfs_linux);
-	return __vfs(buf, vfs_linux, ret);
+	struct statvfs_linux vfs_linux = {0};
+	syscall(SYS_statfs, path, &vfs_linux);
+	return __vfs(buf, &vfs_linux);
 }
 
 int
 __fstatvfs190(int fd, struct statvfs *restrict buf, int flags __unused)
 {
-	struct statvfs_linux *vfs_linux = {0};
-	int ret = __syscall2(SYS_fstatfs, fd, vfs_linux);
-	return __vfs(buf, vfs_linux, ret);
+	struct statvfs_linux vfs_linux = {0};
+	syscall(SYS_fstatfs, fd, &vfs_linux);
+	return __vfs(buf, &vfs_linux);
 }
 
 int

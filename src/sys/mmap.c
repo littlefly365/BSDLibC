@@ -34,7 +34,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <errno.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(mmap, _mmap);
@@ -54,11 +54,8 @@ _mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)
 	flags &= ~MAP_ALIGNMENT_MASK;
 
 	if (align == 0) {
-		ret = __syscall6(SYS_mmap, addr, len, prot, flags, fd, offset);
-		if (ret < 0 && ret >= -4095) {
-			errno = -ret;
+		if ((ret = syscall(SYS_mmap, addr, len, prot, flags, fd, offset)) == -1)
 			return MAP_FAILED;
-		}
 		return (void*)ret;
 	}
 
@@ -70,7 +67,7 @@ _mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)
 		return MAP_FAILED;
 	}
 
-	base = (void*)__syscall6(SYS_mmap, NULL, len + extra, prot, flags, fd, offset);
+	base = (void*)syscall(SYS_mmap, NULL, len + extra, prot, flags, fd, offset);
 	if (base == MAP_FAILED)
 		return MAP_FAILED;
 

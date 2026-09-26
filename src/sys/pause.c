@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(pause, _pause);
@@ -39,5 +39,5 @@ __weak_alias(pause, _pause);
 int
 _pause(void)
 {
-	return __syscall0(SYS_pause);
+	return syscall(SYS_pause);
 }

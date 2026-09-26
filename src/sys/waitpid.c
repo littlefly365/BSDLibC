@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/wait.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(waitpid, _waitpid);
@@ -39,5 +40,5 @@ __weak_alias(waitpid, _waitpid);
 pid_t
 _waitpid(pid_t pid, int *status, int opts)
 {
-	return __syscall4(SYS_wait4, pid, status, opts, 0);
+	return syscall(SYS_wait4, pid, status, opts, 0);
 }

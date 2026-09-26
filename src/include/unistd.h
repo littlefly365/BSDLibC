@@ -401,7 +401,7 @@ __aconst char *strsignal(int);
 #endif /* __STRSIGNAL_DECLARED */
 int	 swapctl(int, void *, int);
 int	 swapon(const char *);			/* obsoleted by swapctl() */
-int	 syscall(int, ...);
+long	 syscall(long, ...);
 quad_t	 __syscall(quad_t, ...);
 int	 undelete(const char *);
 

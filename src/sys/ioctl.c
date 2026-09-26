@@ -30,8 +30,9 @@
 #include <sys/syscall.h>
 #include <sys/ioctl.h>
 #include <sys/cdefs.h>
+#include <unistd.h>
 #include <stdarg.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(ioctl, _ioctl);
@@ -46,5 +47,5 @@ _ioctl(int fd, unsigned long request, ...)
 	arg = va_arg(ap, void *);
 	va_end(ap);
 
-	return __syscall3(SYS_ioctl, fd, request, arg);
+	return syscall(SYS_ioctl, fd, request, arg);
 }

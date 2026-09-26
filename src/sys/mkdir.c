@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(mkdir, _mkdir);
@@ -39,5 +39,5 @@ __weak_alias(mkdir, _mkdir);
 int
 _mkdir(const char *path, mode_t mode)
 {
-	return __syscall2(SYS_mkdir, path, mode);
+	return syscall(SYS_mkdir, path, mode);
 }

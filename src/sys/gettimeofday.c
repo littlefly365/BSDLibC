@@ -31,12 +31,12 @@
 #include <sys/cdefs.h>
 #include <unistd.h>
 #include <time.h>
-#include <asm.h>
+#include "libc.h"
 
 #define SYS_gettimeofday 96
 
 int
 __gettimeofday50(struct timeval *tv, struct timezone *tz)
 {
-	return __syscall2(SYS_gettimeofday, tv, tz);
+	return syscall(SYS_gettimeofday, tv, tz);
 }

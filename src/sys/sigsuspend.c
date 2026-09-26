@@ -28,11 +28,12 @@
 */
 
 #include <sys/syscall.h>
+#include <unistd.h>
 #include <signal.h>
-#include <asm.h>
+#include "libc.h"
 
 int
 __sigsuspend14(const sigset_t *mask)
 {
-	return __syscall2(SYS_rt_sigsuspend, mask, sizeof(sigset_t));
+	return syscall(SYS_rt_sigsuspend, mask, sizeof(sigset_t));
 }

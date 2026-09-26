@@ -31,7 +31,6 @@
 #include <sys/cdefs.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <asm.h>
 
 #ifdef __weak_alias
 __weak_alias(lchmod, _lchmod);

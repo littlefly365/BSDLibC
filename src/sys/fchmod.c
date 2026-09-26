@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/stat.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(fchmod, _fchmod);
@@ -39,6 +40,6 @@ __weak_alias(fchmod, _fchmod);
 int
 _fchmod(int fd, mode_t mode)
 {
-	return __syscall2(SYS_fchmod, fd, mode);
+	return syscall(SYS_fchmod, fd, mode);
 }
 

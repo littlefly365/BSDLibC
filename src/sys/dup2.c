@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(dup2, _dup2);
@@ -40,6 +40,6 @@ int
 _dup2(int old, int new)
 {
 	if (old == new)
-		return old; /* TODO: file descriptor verification */
-	return __syscall2(SYS_dup2, old, new);
+		return old;
+	return syscall(SYS_dup2, old, new);
 }

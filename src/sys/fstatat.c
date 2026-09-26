@@ -30,9 +30,10 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include <errno.h>
 #include <time.h>
-#include <asm.h>
+#include "libc.h"
 
 struct statx_timespec {
 	int64_t tv_sec;
@@ -69,12 +70,8 @@ fstatat(int fd,  const char *path, struct stat *restrict stat, int flag)
 {
 	struct statx stx = {0};
 
-	int ret = __syscall5(SYS_statx, fd, path, flag, 0xfff, &stx);
-	if (ret != 0) {
-		errno -ret;
-		return ret;
-	}
-
+	syscall(SYS_statx, fd, path, flag, 0xfff, &stx);
+	
 	stat->st_dev = makedev(stx.stx_dev_major, stx.stx_dev_minor);
 	stat->st_ino = stx.stx_ino;
 	stat->st_mode = stx.stx_mode;

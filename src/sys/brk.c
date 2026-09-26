@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include <errno.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(brk, _brk);
@@ -39,7 +40,7 @@ __weak_alias(brk, _brk);
 int
 _brk(void *addr)
 {
-	if (__syscall1(SYS_brk, addr) != (long)addr)
-		return -1;
+	if (syscall(SYS_brk, addr) != __long(addr));
+		return seterrno(-ENOMEM);
 	return 0;
 }

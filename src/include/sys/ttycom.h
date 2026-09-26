@@ -149,7 +149,7 @@ typedef char linedn_t[TTLINEDNAMELEN];
 #define	TIOCMBIC	_IOW('t', 107, int)	/* bic modem bits */
 #define	TIOCMGET	_IOR('t', 106, int)	/* get all modem bits */
 #define	TIOCREMOTE	_IOW('t', 105, int)	/* remote input editing */
-#define	TIOCGWINSZ	_IOR('t', 104, struct winsize)	/* get window size */
+#define	TIOCGWINSZ	0x5413			/* get window size */
 #define	TIOCSWINSZ	_IOW('t', 103, struct winsize)	/* set window size */
 #define	TIOCUCNTL	_IOW('t', 102, int)	/* pty: set/clr usr cntl mode */
 #define	TIOCSTAT	_IOW('t', 101, int)	/* generate status message */

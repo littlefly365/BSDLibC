@@ -30,14 +30,14 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
-__weak_alias(ftruncate, __ftruncate);
+__weak_alias(truncate, __truncate);
 #endif
 
 int
-__ftruncate(const char *path, off_t length)
+__truncate(const char *path, off_t length)
 {
-	return __syscall2(SYS_ftruncate, path, length);
+	return syscall(SYS_truncate, path, length);
 }

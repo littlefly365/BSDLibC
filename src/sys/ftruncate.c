@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(ftruncate, _ftruncate);
@@ -39,5 +39,5 @@ __weak_alias(ftruncate, _ftruncate);
 int
 _ftruncate(int fd, off_t length)
 {
-	return __syscall2(SYS_ftruncate, fd, length);
+	return syscall(SYS_ftruncate, fd, length);
 }

@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(geteuid, _geteuid);
@@ -39,5 +39,5 @@ __weak_alias(geteuid, _geteuid);
 uid_t
 _geteuid(void)
 {
-	return __syscall0(SYS_geteuid);
+	return syscall(SYS_geteuid);
 }

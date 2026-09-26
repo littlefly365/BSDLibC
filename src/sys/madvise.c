@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/mman.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(madvise, _madvise);
@@ -39,5 +40,5 @@ __weak_alias(madvise, _madvise);
 int
 _madvise(void *addr, size_t len, int advice)
 {
-	return __syscall3(SYS_madvise, addr, len, advice);
+	return syscall(SYS_madvise, addr, len, advice);
 }

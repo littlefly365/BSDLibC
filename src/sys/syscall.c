@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2026, littlefly365
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- *
+ * 
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * 3. Neither the name of the copyright holder nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -29,16 +29,26 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #include "libc.h"
 
 #ifdef __weak_alias
-__weak_alias(fchmodat, _fchmodat);
+__weak_alias(syscall, _syscall);
 #endif
 
-int
-_fchmodat(int fd, const char *path, mode_t mode, int flag)
+long
+_syscall(long n, ...)
 {
-	return syscall(SYS_fchmodat2, fd, path, mode, flag);
+	va_list ap;
+
+	va_start(ap, n);
+	long a1 = va_arg(ap, long);
+	long a2 = va_arg(ap, long);
+	long a3 = va_arg(ap, long);
+	long a4 = va_arg(ap, long);
+	long a5 = va_arg(ap, long);
+	long a6 = va_arg(ap, long);
+	va_end(ap);
+
+	return seterrno(__syscall6(n, a1, a2, a3, a4, a5, a6));
 }

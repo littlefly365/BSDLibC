@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(getrandom, _getrandom);
@@ -39,5 +39,5 @@ __weak_alias(getrandom, _getrandom);
 ssize_t
 _getrandom(const void *buf, size_t buflen, unsigned int flags)
 {
-	return __syscall3(SYS_getrandom, buf, buflen, flags);
+	return syscall(SYS_getrandom, buf, buflen, flags);
 }

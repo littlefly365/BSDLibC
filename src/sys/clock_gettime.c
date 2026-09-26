@@ -31,12 +31,13 @@
 #include <sys/cdefs.h>
 #include <unistd.h>
 #include <time.h>
-#include <asm.h>
+#include "libc.h"
 
 #define SYS_clock_gettime 228
 
 int
 __clock_gettime50(clockid_t clk, struct timespec *ts)
 {
-	return __syscall2(SYS_clock_gettime, clk, ts);
+	return syscall(SYS_clock_gettime, clk, ts); /* Replace syscall with vdso? */
+
 }

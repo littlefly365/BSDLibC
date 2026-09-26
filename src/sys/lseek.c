@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(lseek, _lseek);
@@ -39,5 +39,5 @@ __weak_alias(lseek, _lseek);
 off_t
 _lseek(int fd, off_t offset, int whence)
 {
-	return __syscall3(SYS_lseek, fd, offset, whence);
+	return syscall(SYS_lseek, fd, offset, whence);
 }

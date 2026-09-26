@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(rmdir, _rmdir);
@@ -39,5 +39,5 @@ __weak_alias(rmdir, _rmdir);
 int
 _rmdir(const char *path)
 {
-	return __syscall1(SYS_rmdir, path);
+	return syscall(SYS_rmdir, path);
 }

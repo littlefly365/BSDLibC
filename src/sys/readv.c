@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/uio.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(readv, _readv);
@@ -39,5 +40,5 @@ __weak_alias(readv, _readv);
 ssize_t
 _readv(int fd, const struct iovec *buf, size_t count)
 {
-	return __syscall3(SYS_readv, fd, buf, count);
+	return syscall(SYS_readv, fd, buf, count);
 }

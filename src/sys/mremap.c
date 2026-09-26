@@ -33,7 +33,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <errno.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(mremap, _mremap);
@@ -47,5 +47,5 @@ void
 		return MAP_FAILED;
 	}
 
-	return (void*)__syscall5(SYS_mremap, oldp, oldsize, newsize, flags, newp);
+	return (void*)syscall(SYS_mremap, oldp, oldsize, newsize, flags, newp);
 }

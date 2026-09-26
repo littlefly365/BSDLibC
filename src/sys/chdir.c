@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(chdir, _chdir);
@@ -39,5 +39,5 @@ __weak_alias(chdir, _chdir);
 int
 _chdir(const char *path)
 {
-	return __syscall1(SYS_chdir, path);
+	return syscall(SYS_chdir, path);
 }

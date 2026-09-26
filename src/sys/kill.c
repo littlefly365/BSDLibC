@@ -29,8 +29,9 @@
 
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
+#include <unistd.h>
 #include <signal.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(kill, _kill);
@@ -39,5 +40,5 @@ __weak_alias(kill, _kill);
 int
 _kill(pid_t pid, int sig)
 {
-	return __syscall2(SYS_kill, pid, sig);
+	return syscall(SYS_kill, pid, sig);
 }

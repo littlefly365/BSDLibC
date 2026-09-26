@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(sbrk, _sbrk);
@@ -40,12 +40,12 @@ void *
 _sbrk(intptr_t increment)
 {
 	void *new, *ret;
-	void *old = (void*)__syscall1(SYS_brk, 0);
+	void *old = (void*)syscall(SYS_brk, 0);
 
 	if (increment == 0)
 		return old;
 
-	if ((new = (char*)old + increment) != (ret = (void*)__syscall1(SYS_brk, new)))
+	if ((new = (char*)old + increment) != (ret = (void*)syscall(SYS_brk, new)))
 		return (void*)-1;
 	return old;
 }

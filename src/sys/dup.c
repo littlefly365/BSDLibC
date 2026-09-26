@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(dup, _dup);
@@ -39,5 +39,5 @@ __weak_alias(dup, _dup);
 int
 _dup(int fd)
 {
-	return __syscall1(SYS_dup, fd);
+	return syscall(SYS_dup, fd);
 }

@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(getppid, _getppid);
@@ -39,5 +39,5 @@ __weak_alias(getppid, _getppid);
 pid_t
 _getppid(void)
 {
-	return __syscall0(SYS_getppid);
+	return syscall(SYS_getppid);
 }

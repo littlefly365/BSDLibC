@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(getegid, _getegid);
@@ -39,5 +39,5 @@ __weak_alias(getegid, _getegid);
 gid_t
 _getegid(void)
 {
-	return __syscall0(SYS_getegid);
+	return syscall(SYS_getegid);
 }

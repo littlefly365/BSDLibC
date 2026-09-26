@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(pipe, _pipe);
@@ -39,5 +39,5 @@ __weak_alias(pipe, _pipe);
 int
 _pipe(int fd[2])
 {
-	return __syscall1(SYS_pipe, fd);
+	return syscall(SYS_pipe, fd);
 }

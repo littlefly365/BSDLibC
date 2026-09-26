@@ -30,7 +30,8 @@
 #include <sys/resource.h>
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(getrlimit, _getrlimit);
@@ -39,5 +40,5 @@ __weak_alias(getrlimit, _getrlimit);
 int
 _getrlimit(int resource, struct rlimit *rlp)
 {
-	return __syscall2(SYS_getrlimit, resource, rlp);
+	return syscall(SYS_getrlimit, resource, rlp);
 }

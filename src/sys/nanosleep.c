@@ -31,10 +31,10 @@
 #include <sys/cdefs.h>
 #include <unistd.h>
 #include <time.h>
-#include <asm.h>
+#include "libc.h"
 
 int
 __nanosleep50(const struct timespec *req, struct timespec *rem)
 {
-	return __syscall2(SYS_nanosleep, req, rem);
+	return syscall(SYS_nanosleep, req, rem);
 }

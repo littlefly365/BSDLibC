@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(chroot, _chroot);
@@ -39,5 +39,5 @@ __weak_alias(chroot, _chroot);
 int
 _chroot(const char *path)
 {
-	return __syscall1(SYS_chroot, path);
+	return seterrno(syscall(SYS_chroot, path));
 }

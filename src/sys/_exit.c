@@ -30,11 +30,11 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 __strong_alias(_Exit, _exit);
 void
 _exit(int exit_code)
 {
-	__syscall1(SYS_exit, exit_code);
+	(void)syscall(SYS_exit, exit_code);
 }

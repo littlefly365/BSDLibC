@@ -30,11 +30,12 @@
 #include <sys/syscall.h>
 #include <limits.h>
 #include <dirent.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 int
 __getdents30(int fd, struct dirent *buf, size_t len)
 {
 	if (len > INT_MAX) len = INT_MAX;
-	return __syscall3(SYS_getdents64, fd, buf, len);
+	return syscall(SYS_getdents64, fd, buf, len);
 }

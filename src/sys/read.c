@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(read, _read);
@@ -39,5 +39,5 @@ __weak_alias(read, _read);
 ssize_t
 _read(int fd, void *buf, size_t count)
 {
-	return __syscall3(SYS_read, fd, buf, count);
+	return syscall(SYS_read, fd, buf, count);
 }

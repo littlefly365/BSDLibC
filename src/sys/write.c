@@ -30,7 +30,7 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <unistd.h>
-#include <asm.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(write, _write);
@@ -39,5 +39,5 @@ __weak_alias(write, _write);
 ssize_t
 _write(int fd, const void *buf, size_t count)
 {
-	return __syscall3(SYS_write, fd, buf, count);
+	return syscall(SYS_write, fd, buf, count);
 }

@@ -33,7 +33,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-#include <asm.h>
+#include "libc.h"
 
 #define cwd_check(exp, buf) ((exp) > 0 && buf[0] == '/')
 
@@ -45,10 +45,11 @@ __getcwd(char *buf, size_t size)
 		return NULL;
 	} if (!buf) {
 		char cwd[MAXPATHLEN];
-		if (cwd_check(__syscall2(SYS_getcwd, cwd, MAXPATHLEN), cwd))
+		if (cwd_check(syscall(SYS_getcwd, cwd, MAXPATHLEN), cwd))
 			return strdup(cwd);
-	} else if (cwd_check(__syscall2(SYS_getcwd, buf, size), buf))
+	} else if (cwd_check(syscall(SYS_getcwd, buf, size), buf))
 		return buf;
+
 	errno = ENOENT;
 	return NULL;
 }

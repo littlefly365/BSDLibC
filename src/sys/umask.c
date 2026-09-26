@@ -30,7 +30,8 @@
 #include <sys/syscall.h>
 #include <sys/cdefs.h>
 #include <sys/stat.h>
-#include <asm.h>
+#include <unistd.h>
+#include "libc.h"
 
 #ifdef __weak_alias
 __weak_alias(umask, _umask);
@@ -39,5 +40,5 @@ __weak_alias(umask, _umask);
 mode_t
 _umask(mode_t mode)
 {
-	return __syscall1(SYS_umask, mode);
+	return syscall(SYS_umask, mode);
 }
