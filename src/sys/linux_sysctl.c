@@ -78,9 +78,9 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 				switch (mib[1])
 				{
 				case KERN_HOSTNAME:
-					return syscall(SYS_sethostname, newp, newlenp));
+					return syscall(SYS_sethostname, newp, newlenp);
 				case KERN_DOMAINNAME:
-					return syscall(SYS_setdomainname, newp, newlenp));
+					return syscall(SYS_setdomainname, newp, newlenp);
 				case KERN_HOSTID:
 					int fd;
 					if ((fd = open(_PATH_HOSTID, O_WRONLY | O_CREAT | O_TRUNC)) < 0)
@@ -116,7 +116,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_VERSION:
 				return copy(uts_sysctl.version, oldp, strlen(uts_sysctl.version), *oldlenp);
 			case KERN_MAXVNODES:
-				return seterrno(-ENOSTUP);
+				return seterrno(-ENOTSUP);
 			case KERN_MAXPROC:
 				if ((*(long*)oldp = get_int_from_file("/proc/sys/kernel/pid_max")) <= 0)
 					return -1;
@@ -146,7 +146,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_PROC:
 			case KERN_FILE:
 			case KERN_PROF:
-				return seterrno(-ENOSTUP);
+				return seterrno(-ENOTSUP);
 			case KERN_POSIX1:
 				*(long*)oldp = _POSIX_VERSION;
 				break;
@@ -154,7 +154,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_JOB_CONTROL:
 			case KERN_SAVED_IDS:
 			case KERN_OBOOTTIME:
-				return seterrno(-ENOSTUP);
+				return seterrno(-ENOTSUP);
 			case KERN_DOMAINNAME:
 				return copy(uts_sysctl.domainname, oldp, strlen(uts_sysctl.domainname), *oldlenp);
 			case KERN_MAXPARTITIONS:
@@ -176,7 +176,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_MEMLOCK:
 			case KERN_MEMLOCK_RANGE:
 			case KERN_MEMORY_PROTECTION:
-				return seterrno(-ENOSTUP);
+				return seterrno(-ENOTSUP);
 			case KERN_LOGIN_NAME_MAX:
 				*(long*)oldp = LOGIN_NAME_MAX;
 				break;
@@ -200,7 +200,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_LABELSECTOR:
 			case KERN_LABELOFFSET:
 			case KERN_LWP:
-			case KERN_FORKSLEEP:
+			case KERN_FORKFSLEEP:
 			case KERN_POSIX_THREADS:
 			case KERN_POSIX_SEMAPHORES:
 			case KERN_POSIX_BARRIERS:
@@ -216,7 +216,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_VERIEXEC:
 			case KERN_CP_ID:
 			case KERN_HARDCLOCK_TICKS:
-				return seterrno(-ENOSTUP);
+				return seterrno(-ENOTSUP);
 			case KERN_ARND:
 				if (getrandom(oldp, *oldlenp, 0) < 0)
 					return -1;
@@ -226,7 +226,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			case KERN_EVCNT:
 			case KERN_SOFIXEDBUF:
 			case KERN_ENTROPY:
-				return seterrno(-ENOSTUP);
+				return seterrno(-ENOTSUP);
 			default:
 				return seterrno(-EINVAL);
 			}
@@ -255,13 +255,13 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 			break;
 		case HW_PHYSMEM:
 		case HW_USERMEM:
-			return seterrno(-ENOSTUP);
+			return seterrno(-ENOTSUP);
 		case HW_PAGESIZE:
 			*(long*)oldp = PAGE_SIZE;
 			break;
 		case HW_DISKNAMES:
 		case HW_IOSTATS:
-			return seterrno(-ENOSTUP);
+			return seterrno(-ENOTSUP);
 		case HW_MACHINE_ARCH:
 			return copy(MACHINE_ARCH, oldp, strlen(MACHINE_ARCH), *oldlenp);
 		case HW_ALIGNBYTES:
@@ -271,7 +271,7 @@ __sysctl(const int *mib, u_int miblen, void *oldp, size_t *oldlenp, const void *
 		case HW_PHYSMEM64:
 		case HW_USERMEM64:
 		case HW_IOSTATNAMES:
-			return seterrno(-ENOSTUP);
+			return seterrno(-ENOTSUP);
 		case HW_NCPUONLINE:
 			if ((*(long*)oldp = get_int_from_file("/sys/devices/system/cpu/online")) <= 0)
 				return -1;
