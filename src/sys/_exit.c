@@ -32,9 +32,14 @@
 #include <unistd.h>
 #include "libc.h"
 
-__strong_alias(_Exit, _exit);
-void
-_exit(int exit_code)
+__dead void
+_exit(int ec)
 {
-	(void)syscall(SYS_exit, exit_code);
+	(void)syscall(SYS_exit_group, ec);
+
+	while (1)
+	{
+		(void)syscall(SYS_exit, ec);
+	}
 }
+__strong_alias(_Exit, _exit);
