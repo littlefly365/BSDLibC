@@ -1,0 +1,17 @@
+#define UC_GREGS_RAX 168
+#define UC_GREGS_RDX 72
+#define UC_GREGS_RCX 80
+#define UC_GREGS_RBX 160
+#define UC_GREGS_RSI 64
+#define UC_GREGS_RDI 56
+#define UC_GREGS_RBP 152
+#define UC_GREGS_RSP 248
+#define UC_GREGS_R8 88
+#define UC_GREGS_R9 96
+#define UC_GREGS_R10 104
+#define UC_GREGS_R11 112
+#define UC_GREGS_R12 120
+#define UC_GREGS_R13 128
+#define UC_GREGS_R14 136
+#define UC_GREGS_R15 144
+#define UC_GREGS_RIP 224
