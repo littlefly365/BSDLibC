@@ -13,7 +13,8 @@ SRCS+=	base64.c ethers.c gethnamaddr.c getifaddrs.c \
 	iso_addr.c linkaddr.c \
 	nsdispatch.c nslexer.c nsparser.c \
 	rcmd.c recv.c send.c sethostent.c \
-	sctp_sys_calls.c sockatmark.c
+	sockatmark.c
+#	sctp_sys_calls.c sockatmark.c
 
 .if (${MKHESIOD} != "no")
 SRCS+=	hesiod.c

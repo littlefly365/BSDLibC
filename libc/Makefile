@@ -17,6 +17,7 @@
 # The Hesiod functions are always in libc. To choose that getpwent() and friends
 # actually call the Hesiod functions, put -DHESIOD on the CPPFLAGS line below.
 LIB=c
+INCS=empty.h	# if there's not any header the installation fails
 
 LIBCDIR=${.CURDIR}
 MACHINE_CPU ?= ${MACHINE_ARCH}
@@ -54,6 +55,7 @@ COMPATDIR=${.CURDIR}/compat
 CPPFLAGS+=	-D__BUILD_LEGACY
 .endif
 
+.PATH: ${.CURDIR}/include
 .if exists (${ARCHDIR}/Makefile.inc)
 .PATH:	${ARCHDIR}
 .include "${ARCHDIR}/Makefile.inc"

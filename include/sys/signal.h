@@ -132,7 +132,6 @@ struct	sigaction {
 	} _sa_u;	/* signal handler */
 	sigset_t sa_mask;		/* signal mask to apply */
 	int	sa_flags;		/* see signal options below */
-	void	(*sa_restorer)(void);
 };
 
 #define sa_handler _sa_u._sa_handler

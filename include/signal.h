@@ -71,6 +71,7 @@ int	__sigaction_siginfo(int, const struct sigaction * __restrict,
 
 #if (_POSIX_C_SOURCE - 0L) >= 199506L || (_XOPEN_SOURCE - 0) >= 500 || \
     defined(_NETBSD_SOURCE)
+#ifdef _LIBC
 int	pthread_sigmask(int, const sigset_t * __restrict,
 	    sigset_t * __restrict);
 int	pthread_kill(pthread_t, int);
@@ -79,6 +80,7 @@ int	__libc_thr_sigsetmask(int, const sigset_t * __restrict,
 #ifndef __LIBPTHREAD_SOURCE__
 #define	pthread_sigmask		__libc_thr_sigsetmask
 #endif /* __LIBPTHREAD_SOURCE__ */
+#endif
 #endif
 
 #ifndef __LIBC12_SOURCE__

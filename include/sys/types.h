@@ -366,7 +366,9 @@ struct	uio;
 #if !defined(_KERNEL) && !defined(_STANDALONE)
 #if (_POSIX_C_SOURCE - 0L) >= 199506L || (_XOPEN_SOURCE - 0) >= 500 || \
     defined(_NETBSD_SOURCE)
+#ifdef _LIBC
 #include <pthread_types.h>
+#endif
 #endif
 #endif
 

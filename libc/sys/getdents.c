@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2026, littlefly365
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from
- *   this software without specific prior written permission.
- * 
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -25,7 +25,7 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 #include <sys/syscall.h>
 #include <string.h>
@@ -33,65 +33,89 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <stddef.h>
+
 #include "libc.h"
 
-struct linux_dirent64 {
-	ino_t d_ino;
-	off_t d_off;
-	unsigned short d_reclen;
-	unsigned char d_type;
-	char d_name[256];
+struct linux_dirent {
+	ino_t		d_ino;
+	off_t		d_off;
+	unsigned short	d_reclen;
+	unsigned char	d_type;
+	char		d_name[];
 };
 
 int
 __getdents30(int fd, struct dirent *buf, size_t len)
 {
-    char kbuf[4096];
-    ssize_t nread;
-    size_t pos = 0;
-    size_t out = 0;
+	char kbuf[4096];
+	ssize_t nread;
+	size_t pos;
+	size_t out;
 
-    nread = syscall(SYS_getdents64, fd, kbuf, sizeof(kbuf));
-    if (nread < 0)
-        return -1;
+	nread = syscall(SYS_getdents64, fd, kbuf, sizeof(kbuf));
+	if (nread < 0)
+		return -1;
 
-    while (pos < (size_t)nread) {
-        struct linux_dirent64 *src;
-        struct dirent *dst;
-        size_t namlen;
-        size_t reclen;
+	pos = 0;
+	out = 0;
 
-        src = (struct linux_dirent64 *)(kbuf + pos);
+	while (pos < (size_t)nread) {
+		struct linux_dirent *src;
+		struct dirent *dst;
+		size_t namlen;
+		size_t reclen;
+		size_t maxnamlen;
 
-        if (src->d_reclen < offsetof(struct linux_dirent64, d_name) ||
-            src->d_reclen > (size_t)nread - pos) {
-            errno = EIO;
-            return -1;
-        }
+		src = (struct linux_dirent *)(void *)(kbuf + pos);
 
-        namlen = strnlen(src->d_name,
-            src->d_reclen - offsetof(struct linux_dirent64, d_name));
+		/*
+		 * d_reclen must include everything from the beginning of
+		 * the record through the terminating NUL of d_name.
+		 */
+		if (src->d_reclen < offsetof(struct linux_dirent, d_name) ||
+		    src->d_reclen > (size_t)nread - pos) {
+			errno = EIO;
+			return -1;
+		}
 
-        reclen = offsetof(struct dirent, d_name) + namlen + 1;
+		maxnamlen = src->d_reclen -
+		    offsetof(struct linux_dirent, d_name);
 
-        reclen = (reclen + 7) & ~7UL;
+		namlen = strnlen(src->d_name, maxnamlen);
 
-        if (out + reclen > len)
-            break;
+		/*
+		 * A valid Linux directory entry must contain a NUL-terminated
+		 * name inside the record.
+		 */
+		if (namlen == maxnamlen) {
+			errno = EIO;
+			return -1;
+		}
 
-        dst = (struct dirent *)((char *)buf + out);
+		reclen = offsetof(struct dirent, d_name) +
+		    namlen + 1;
 
-        dst->d_fileno = src->d_ino;
-        dst->d_namlen = namlen;
-        dst->d_type = src->d_type;
-        dst->d_reclen = reclen;
+		/*
+		 * struct dirent entries are aligned to 8 bytes.
+		 */
+		reclen = (reclen + 7) & ~(size_t)7;
 
-        memcpy(dst->d_name, src->d_name, namlen);
-        dst->d_name[namlen] = '\0';
+		if (reclen > len - out)
+			break;
 
-        pos += src->d_reclen;
-        out += reclen;
-    }
+		dst = (struct dirent *)((char *)buf + out);
 
-    return out;
+		dst->d_fileno = src->d_ino;
+		dst->d_namlen = namlen;
+		dst->d_type = src->d_type;
+		dst->d_reclen = reclen;
+
+		memcpy(dst->d_name, src->d_name, namlen);
+		dst->d_name[namlen] = '\0';
+
+		pos += src->d_reclen;
+		out += reclen;
+	}
+
+	return (int)out;
 }
