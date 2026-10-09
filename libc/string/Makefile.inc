@@ -8,7 +8,6 @@
 # then the relevant .c file is automatically removed
 # Also adding the .c name to NO_SRCS will have the same effect
 
-#SRCS+=	bzero.c
 SRCS+=	bm.c stpcpy.c stpncpy.c \
 	strcasecmp.c strncasecmp.c strcasestr.c strcoll.c strdup.c \
 	strerror.c strerror_ss.c strlcat.c strlcpy.c strnlen.c \
@@ -16,14 +15,14 @@ SRCS+=	bm.c stpcpy.c stpncpy.c \
 	strtok_r.c strxfrm.c __strsignal.c strerror_r.c strndup.c \
 	stresep.c memrchr.c
 
-SRCS+=	bcmp.c bcopy.S ffs.S ffsl.c ffsll.c memchr.S memcmp.c memset.S
-SRCS+=	strcat.S strcmp.S strcpy.S strcspn.c strlen.S
+SRCS+=	bcmp.c bcopy.c bzero.c ffs.c ffsl.c ffsll.c memchr.c memcmp.c memset.c
+SRCS+=	strcat.c strcmp.c strcpy.c strcspn.c strlen.c
 SRCS+=	strncat.c strncmp.c strncpy.c strpbrk.c strsep.c
 SRCS+=	strspn.c strstr.c swab.c strnstr.c
 SRCS+=	explicit_memset.c consttime_memequal.c
 
-SRCS+=	memccpy.c memcpy.S memmem.c memmove.S mempcpy.c
-SRCS+=	strchr.S strrchr.S strchrnul.c
+SRCS+=	memccpy.c memcpy.c memmem.c memmove.c mempcpy.c
+SRCS+=	strchr.c strrchr.c strchrnul.c
 SRCS+=	popcount32.c popcount64.c
 
 # wide char
@@ -43,7 +42,7 @@ COPTS.memset.c+=	${${ACTIVE_CC} == "gcc":? -fno-builtin :}
 
 COPTS.strerror_r.c+= 	-Wno-format-nonliteral
 
-#.include "${ARCHDIR}/string/Makefile.inc"
+.include "${ARCHDIR}/string/Makefile.inc"
 
 MAN+=	bm.3 bcmp.3 bcopy.3 bstring.3 bzero.3 consttime_memequal.3 \
 	explicit_memset.3 ffs.3 index.3 \

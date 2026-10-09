@@ -83,7 +83,7 @@ char		*__progname __common = empty_string;
 
 __dead __dso_hidden void ___start(void (*)(void), struct ps_strings *);
 
-#define	write(fd, s, n)	__syscall3(SYS_write, (fd), (s), (n))
+#define	write(fd, s, n)	syscall(SYS_write, (fd), (s), (n))
 
 #define	_FATAL(str)				\
 do {						\

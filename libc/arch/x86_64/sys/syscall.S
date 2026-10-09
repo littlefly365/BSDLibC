@@ -39,6 +39,14 @@
 	RCSID("$NetBSD: syscall.S,v 1.5 2020/04/18 23:55:52 thorpej Exp $")
 #endif /* SYSLIBC_SCCS and not lint */
 
-#include "SYS.h"
-
-WSYSCALL(syscall,_syscall)
+ENTRY(__sys_syscall)
+	movq	%rdi, %rax
+	movq	%rsi, %rdi
+	movq	%rdx, %rsi
+	movq	%rcx, %rdx
+	movq	%r8, %r10
+	movq	%r9, %r8
+	movq	8(%rsp), %r9
+	syscall
+	ret
+END(__sys_syscall)

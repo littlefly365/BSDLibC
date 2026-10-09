@@ -34,14 +34,13 @@
 
 #ifdef __weak_alias
 __weak_alias(syscall, _syscall);
+__weak_alias(_syscall, __syscall);
 #endif
 
-#ifdef __strong_alias
-__strong_alias(__syscall, _syscall);
-#endif
+extern long __sys_syscall(long n, long a1, long a2, long a3, long a4, long a5, long a6);
 
 long
-_syscall(long n, ...)
+__syscall(long n, ...)
 {
 	va_list ap;
 
@@ -56,5 +55,6 @@ _syscall(long n, ...)
 
 	if (n < 0 || n >= SYS_MAXSYSCALL)
 		return seterrno(-ENOSYS);
-	return seterrno(__syscall6(n, a1, a2, a3, a4, a5, a6));
+
+	return seterrno(__sys_syscall(n, a1, a2, a3, a4, a5, a6));
 }

@@ -1,5 +1,7 @@
 #	$NetBSD: Makefile.inc,v 1.12 2024/05/19 22:25:47 christos Exp $
 
+# compat_lfs_segwait.c
+
 .PATH: ${COMPATDIR}/sys
 SRCS+= compat_getdents.c compat_getdirentries.c compat_msync.c \
     compat_ntp_gettime.c compat_sched.c compat_dup3.c \
@@ -10,7 +12,7 @@ SRCS+= compat_getdents.c compat_getdirentries.c compat_msync.c \
     compat_wait4.c compat_sigtimedwait.c compat_settimeofday.c compat_timer.c \
     compat_clock.c compat_itimer.c compat_select.c compat_nanosleep.c \
     compat___stat30.c compat_aio_suspend.c compat_adjtime.c compat_mknod.c \
-    compat_mqueue.c compat__lwp_park.c compat_lfs_segwait.c compat_kevent.c \
+    compat_mqueue.c compat__lwp_park.c compat_kevent.c \
     compat___ntp_gettime30.c compat___semctl13.c compat___shmctl13.c \
     compat___msgctl13.c compat___lwp_park50.c \
     compat___fhstatvfs140.c compat___fhstatvfs40.c \

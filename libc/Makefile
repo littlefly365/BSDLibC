@@ -27,7 +27,7 @@ ARCHDIR = ${.CURDIR}/arch/${ARCHSUBDIR}
 CPPFLAGS+=-ffreestanding -nostdinc -nostdlib
 CPPFLAGS+=-I${.CURDIR}/include -I${.CURDIR}/../include -I${.CURDIR}/locale -I${.CURDIR}/citrus \
 	-I${.CURDIR}/gen -I${.CURDIR}/stdlib -I${.CURDIR}/csu/common -I${.CURDIR} \
-	-I{.CURDIR}/../ld.elf_so -I${ARCHDIR}
+	-I${.CURDIR}/../ld.elf_so -I${ARCHDIR}
 CPPFLAGS+=-D_LIBC -DLIBC_SCCS -DSYSLIBC_SCCS -D_REENTRANT -D__ELF__
 CPPFLAGS+=-D_LIBC_INTERNAL -D__NetBSD__ -DNLS -DYP -DHESIOD
 
