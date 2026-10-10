@@ -50,7 +50,6 @@ __RCSID("$NetBSD: crt0-common.c,v 1.31 2026/02/10 18:55:30 skrll Exp $");
 #include <unistd.h>
 
 #include "csu-common.h"
-#include "libc.h"
 
 extern int main(int, char **, char **);
 
@@ -220,7 +219,6 @@ static void relocate_self(struct ps_strings *) __noinline;
 static void
 relocate_self(struct ps_strings *ps_strings)
 {
-#if 0
 	AuxInfo *aux = (AuxInfo *)(ps_strings->ps_argvstr + ps_strings->ps_nargvstr +
 	    ps_strings->ps_nenvstr + 2);
 	uintptr_t relocbase = (uintptr_t)~0U;
@@ -230,14 +228,14 @@ relocate_self(struct ps_strings *ps_strings)
 	for (; aux->a_type != AT_NULL; ++aux) {
 		switch (aux->a_type) {
 		case AT_BASE:
-			if (aux->a_v)
+			if (aux->a_val)
 				return;
 			break;
 		case AT_PHDR:
-			phdr = (void *)aux->a_v;
+			phdr = (void *)aux->a_val;
 			break;
 		case AT_PHNUM:
-			phnum = (Elf_Half)aux->a_v;
+			phnum = (Elf_Half)aux->a_val;
 			break;
 		}
 	}
@@ -317,7 +315,6 @@ relocate_self(struct ps_strings *ps_strings)
 			abort();
 		}
 	}
-#endif
 }
 #endif
 

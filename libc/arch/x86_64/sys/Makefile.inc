@@ -1,1 +1,1 @@
-SRCS+=	sigreturn.S syscall.S
+SRCS+=	sigreturn.S sys_syscall.S

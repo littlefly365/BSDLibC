@@ -928,23 +928,25 @@ _rtld(Elf_Addr *sp, Elf_Addr relocbase)
 		case AT_PHNUM:
 			pAUX_phnum = auxp;
 			break;
-#ifdef AT_EUID
 		case AT_EUID:
 			pAUX_euid = auxp;
 			break;
+#ifdef AT_RUID
 		case AT_RUID:
 			pAUX_ruid = auxp;
 			break;
+#endif
 		case AT_EGID:
 			pAUX_egid = auxp;
 			break;
+#ifdef AT_RUID
 		case AT_RGID:
 			pAUX_rgid = auxp;
 			break;
 #endif
-#ifdef AT_SUN_EXECNAME
-		case AT_SUN_EXECNAME:
-			execname = (const char *)(const void *)auxp->a_v;
+#ifdef AT_EXECFN
+		case AT_EXECFN:
+			execname = (const char *)(const void *)auxp->a_val;
 			break;
 #endif
 		case AT_PAGESZ:
@@ -959,16 +961,16 @@ _rtld(Elf_Addr *sp, Elf_Addr relocbase)
 		_rtld_die();
 	}
 	assert(pAUX_pagesz != NULL);
-	_rtld_pagesz = (int)pAUX_pagesz->a_v;
-	_rtld_init((caddr_t)pAUX_base->a_v, (caddr_t)relocbase, execname);
+	_rtld_pagesz = (int)pAUX_pagesz->a_val;
+	_rtld_init((caddr_t)pAUX_base->a_val, (caddr_t)relocbase, execname);
 
 	__progname = _rtld_objself.path;
 	environ = env;
 
-	_rtld_trust = ((pAUX_euid ? (uid_t)pAUX_euid->a_v : geteuid()) ==
-	    (pAUX_ruid ? (uid_t)pAUX_ruid->a_v : getuid())) &&
-	    ((pAUX_egid ? (gid_t)pAUX_egid->a_v : getegid()) ==
-	    (pAUX_rgid ? (gid_t)pAUX_rgid->a_v : getgid()));
+	_rtld_trust = ((pAUX_euid ? (uid_t)pAUX_euid->a_val : geteuid()) ==
+	    (pAUX_ruid ? (uid_t)pAUX_ruid->a_val : getuid())) &&
+	    ((pAUX_egid ? (gid_t)pAUX_egid->a_val : getegid()) ==
+	    (pAUX_rgid ? (gid_t)pAUX_rgid->a_val : getgid()));
 
 #ifdef DEBUG
 	ld_debug = NULL;
@@ -1055,7 +1057,7 @@ _rtld(Elf_Addr *sp, Elf_Addr relocbase)
          * already loaded.
          */
 	if (pAUX_execfd != NULL) {	/* Load the main program. */
-		int             fd = pAUX_execfd->a_v;
+		int             fd = pAUX_execfd->a_val;
 		dbg(("loading main program"));
 		_rtld_objmain = _rtld_map_object(objmain_name, fd, NULL);
 		close(fd);
@@ -1068,13 +1070,13 @@ _rtld(Elf_Addr *sp, Elf_Addr relocbase)
 
 		dbg(("processing main program's program header"));
 		assert(pAUX_phdr != NULL);
-		phdr = (const Elf_Phdr *) pAUX_phdr->a_v;
+		phdr = (const Elf_Phdr *) pAUX_phdr->a_val;
 		assert(pAUX_phnum != NULL);
-		phnum = pAUX_phnum->a_v;
+		phnum = pAUX_phnum->a_val;
 		assert(pAUX_phent != NULL);
-		assert(pAUX_phent->a_v == sizeof(Elf_Phdr));
+		assert(pAUX_phent->a_val; == sizeof(Elf_Phdr));
 		assert(pAUX_entry != NULL);
-		entry = (caddr_t) pAUX_entry->a_v;
+		entry = (caddr_t) pAUX_entry->a_val;
 		_rtld_objmain = _rtld_digest_phdr(phdr, phnum, entry);
 		_rtld_objmain->path = xstrdup(objmain_name);
 		_rtld_objmain->pathlen = strlen(_rtld_objmain->path);

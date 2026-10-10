@@ -9,7 +9,7 @@
 static long
 seterrno(long err)
 {
-	errno = (err < 0) ? -err : errno;
+	errno = (err <= -1 && err >= -4095) ? -err : errno;
 	return (err < 0) ? -1 : err;
 }
 

@@ -33,14 +33,17 @@
 #include "libc.h"
 
 #ifdef __weak_alias
-__weak_alias(syscall, _syscall);
-__weak_alias(_syscall, __syscall);
+__weak_alias(_syscall, syscall);
+#endif
+
+#ifdef __strong_alias
+__strong_alias(__syscall, syscall);
 #endif
 
 extern long __sys_syscall(long n, long a1, long a2, long a3, long a4, long a5, long a6);
 
 long
-__syscall(long n, ...)
+syscall(long n, ...)
 {
 	va_list ap;
 

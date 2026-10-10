@@ -28,6 +28,7 @@
 */
 
 #include <sys/cdefs.h>
+#include <sys/auxv.h>
 #include <unistd.h>
 
 #ifdef __weak_alias
@@ -37,5 +38,5 @@ __weak_alias(issetugid, _issetugid);
 int
 _issetugid(void)
 {
-	return ((getuid() != geteuid()) || (getgid() != getegid()));
+	return getauxval(AT_SECURE);
 }

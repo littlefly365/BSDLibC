@@ -162,17 +162,17 @@ dl_iterate_phdr_setup(void)
 	for (aux = _dlauxinfo(); aux->a_type != AT_NULL; ++aux) {
 		switch (aux->a_type) {
 		case AT_BASE:
-			dlpi_addr = aux->a_v;
+			dlpi_addr = aux->a_val;
 			break;
 		case AT_PHDR:
-			dlpi_phdr = (void *)aux->a_v;
+			dlpi_phdr = (void *)aux->a_val;
 			break;
 		case AT_PHNUM:
-			_DIAGASSERT(__type_fit(Elf_Half, aux->a_v));
-			dlpi_phnum = (Elf_Half)aux->a_v;
+			_DIAGASSERT(__type_fit(Elf_Half, aux->a_val));
+			dlpi_phnum = (Elf_Half)aux->a_val;
 			break;
-		case AT_SUN_EXECNAME:
-			dlpi_name = (void *)aux->a_v;
+		case AT_EXECFN:
+			dlpi_name = (void *)aux->a_val;
 			break;
 		}
 	}

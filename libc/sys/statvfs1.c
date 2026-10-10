@@ -123,9 +123,6 @@ __vfs(const char *path, struct statvfs *restrict buf, struct statvfs_linux *rest
 	{
 		while (getmntent_r(fp, &ent, linebuf, sizeof(linebuf)) != NULL)
 		{
-			if (hasmntopt(&ent, MNTTYPE_IGNORE) != NULL)
-				continue;
-			
 			size_t len = strlen(ent.mnt_dir);
 
 			if (strncmp(path, ent.mnt_dir, len))

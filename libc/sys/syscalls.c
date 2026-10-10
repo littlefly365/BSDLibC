@@ -244,7 +244,7 @@ _brk(void *addr)
 
 /*
  * syscall: 13
- * SYS_rt_sigaction (__sigaction_sigtramp.c)
+ * SYS_rt_sigaction (__sigaction_siginfo.c)
 */
 
 int

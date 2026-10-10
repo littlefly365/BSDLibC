@@ -56,7 +56,7 @@
 #ifndef	RTLD_DEFAULT_LIBRARY_PATH
 #define	RTLD_DEFAULT_LIBRARY_PATH	"/usr/lib"
 #endif
-#define _PATH_LD_HINTS			"/usr/etc/ld.so.conf"
+#define _PATH_LD_HINTS			"/etc/ld.so.conf"
 
 extern size_t _rtld_pagesz;
 

@@ -27,53 +27,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <sys/syscall.h>
-#include <sys/cdefs.h>
-#include <signal.h>
-#include <unistd.h>
+#include <sys/auxv.h>
+#include <dlfcn.h>
+#include "libc.h"
 
-extern void __attribute__((noreturn)) linux_sigreturn(void);
+typedef struct {
+	unsigned long a_type;
+	unsigned long a_val;
+} Auxv_t;
 
-struct linux_sigaction {
-	void (*handler)(int);
-	unsigned long flags;
-	void (*restorer)(void);
-	unsigned mask[2];
-};
+void to(unsigned long *r, unsigned long val) { *r = val; }
 
-int
-__sigaction_sigtramp(int nsig, const struct sigaction *restrict sa, struct sigaction *restrict old, 
-	void *tramp __unused, int version __unused)
+unsigned long
+getauxval(unsigned long type)
 {
-	int flags;
-	struct linux_sigaction sai, oldi;
+	Auxv_t *auxv;
+	unsigned long r;
 
-	if (sa != NULL)
-	{
-		sai.handler = sa->sa_handler;
-		flags = sa->sa_flags;
-
-		flags |= 0x04000000;
-
-		sai.flags = flags;
-		sai.restorer = linux_sigreturn;
-
-		sai.mask[0] = sa->sa_mask.__bits[0];
-		sai.mask[1] = sa->sa_mask.__bits[1];
+	for (auxv = _dlauxinfo(); auxv->a_type != AT_NULL; auxv++) {
+		if (auxv->a_type == type) {
+			to(&r, auxv->a_val);
+			return r;
+		}
 	}
 
-
-	int ret = syscall(SYS_rt_sigaction, nsig, sa != NULL ? &sai : NULL, old != NULL ? &oldi : NULL, 8);
-	if (ret == -1)
-		return -1;
-
-	if (old)
-	{
-		old->sa_handler = oldi.handler;
-		old->sa_flags = oldi.flags & ~0x04000000;
-		old->sa_mask.__bits[0] = oldi.mask[0];
-		old->sa_mask.__bits[1] = oldi.mask[1];
-	}
-
+	seterrno(-ENOENT);
 	return 0;
 }

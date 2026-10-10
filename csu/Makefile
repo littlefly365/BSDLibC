@@ -9,7 +9,7 @@ MKSTRIPIDENT?=no
 MKPIC?=yes
 OBJCOPY?=objcopy
 
-CPPFLAGS+=-I../../include -I../include -D_CSU
+CPPFLAGS+=-I../include
 CFLAGS+=-fno-stack-protector
 
 CSU_MACHINE_ARCH?=	${MACHINE_ARCH}
