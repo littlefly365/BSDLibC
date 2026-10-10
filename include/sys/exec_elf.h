@@ -1068,50 +1068,60 @@ typedef struct {
 } Aux32Info;
 
 typedef struct {
-	Elf64_Word	a_type;		/* 32-bit id */
-	Elf64_Xword	a_v;		/* 64-bit id */
-} Aux64Info;
+	unsigned long a_type;
+	unsigned long a_val;
+} Auxv_t;
 
 /* a_type */
-#define AT_NULL		0	/* Marks end of array */
-#define AT_IGNORE	1	/* No meaning, a_un is undefined */
-#define AT_EXECFD	2	/* Open file descriptor of object file */
-#define AT_PHDR		3	/* &phdr[0] */
-#define AT_PHENT	4	/* sizeof(phdr[0]) */
-#define AT_PHNUM	5	/* # phdr entries */
-#define AT_PAGESZ	6	/* PAGESIZE */
-#define AT_BASE		7	/* Interpreter base addr */
-#define AT_FLAGS	8	/* Processor flags */
-#define AT_ENTRY	9	/* Entry address of executable */
-#define AT_DCACHEBSIZE	10	/* Data cache block size */
-#define AT_ICACHEBSIZE	11	/* Instruction cache block size */
-#define AT_UCACHEBSIZE	12	/* Unified cache block size */
-#define AT_STACKBASE	13	/* Base address of the main thread */
+#define AT_NULL			0
+#define AT_IGNORE		1
+#define AT_EXECFD		2
+#define AT_PHDR			3
+#define AT_PHENT		4
+#define AT_PHNUM		5
+#define AT_PAGESZ		6
+#define AT_BASE			7
+#define AT_FLAGS		8
+#define AT_ENTRY		9
+#define AT_NOTELF		10
+#define AT_UID			11
+#define AT_EUID			12
+#define AT_GID			13
+#define AT_EGID			14
+#define AT_PLATFORM		15
+#define	AT_HWCAP		16
+#define AT_CLKTCK		17
+#define AT_FPUCW		18
+#define AT_DCACHEBSIZE		19
+#define AT_ICACHEBSIZE		20
+#define AT_UCACHEBSIZE		21
+#define AT_IGNOREPPC		22
+#define AT_SECURE		23
+#define AT_BASE_PLATFORM	24
+#define AT_RANDOM		25
+#define AT_HWCAP2		26
+#define AT_RSEQ_FEATURE_SIZE	27
+#define AT_RSEQ_ALIGN		28
+#define AT_HWCAP3		29
+#define	AT_HWCAP4		30
+#define	AT_EXECFN		31
+#define AT_SYSINFO		32
+#define AT_SYSINFO_EHDR		33
+#define AT_L1I_CACHESHAPE	34
+#define AT_L1D_CACHESHAPE	35
+#define AT_L2_CACHESHAPE	36
+#define AT_L3_CACHESHAPE	37
 
-	/* Vendor specific */
-#define AT_MIPS_NOTELF	10	/* XXX a_val != 0 -> MIPS XCOFF executable */
+#define AT_L1I_CACHESIZE	40
+#define AT_L1I_CACHEGEOMETRY	41
+#define AT_L1D_CACHESIZE	42
+#define AT_L1D_CACHEGEOMETRY	43
+#define AT_L2_CACHESIZE		44
+#define AT_L2_CACHEGEOMETRY	45
+#define AT_L3_CACHESIZE		46
+#define AT_L3_CACHEGEOMETRY	47
 
-#define AT_EUID		2000	/* euid (solaris compatible numbers) */
-#define AT_RUID		2001	/* ruid (solaris compatible numbers) */
-#define AT_EGID		2002	/* egid (solaris compatible numbers) */
-#define AT_RGID		2003	/* rgid (solaris compatible numbers) */
-
-	/* Solaris kernel specific */
-#define AT_SUN_LDELF	2004	/* dynamic linker's ELF header */
-#define AT_SUN_LDSHDR	2005	/* dynamic linker's section header */
-#define AT_SUN_LDNAME	2006	/* dynamic linker's name */
-#define AT_SUN_LPGSIZE	2007	/* large pagesize */
-
-	/* Other information */
-#define AT_SUN_PLATFORM 2008	/* sysinfo(SI_PLATFORM) */
-#define AT_SUN_HWCAP	2009	/* process hardware capabilities */
-#define AT_SUN_IFLUSH	2010	/* do we need to flush the instruction cache? */
-#define AT_SUN_CPU	2011	/* CPU name */
-	/* ibcs2 emulation band aid */
-#define AT_SUN_EMUL_ENTRY 2012	/* coff entry point */
-#define AT_SUN_EMUL_EXECFD 2013 /* coff file descriptor */
-	/* Executable's fully resolved name */
-#define AT_SUN_EXECNAME 2014
+#define AT_MINSIGSTKSZ		51
 
 #define ELF_NOTE_GNU_NAMESZ		4
 #define ELF_NOTE_GNU_NAME		"GNU\0"
@@ -1437,7 +1447,7 @@ struct netbsd_elfcore_procinfo {
 #define ELF_R_TYPE	ELF64_R_TYPE
 #define ELFCLASS	ELFCLASS64
 
-#define AuxInfo		Aux64Info
+#define AuxInfo		Auxv_t
 #endif
 
 #ifndef Elf_Symindx
