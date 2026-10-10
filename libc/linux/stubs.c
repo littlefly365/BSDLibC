@@ -8,7 +8,6 @@
 #ifdef __strong_alias
 __strong_alias(__adjtime50, __stub_libc_err);
 __strong_alias(__aio_suspend50, __stub_libc_err);
-__strong_alias(getsockopt2, __stub_libc_err);
 __strong_alias(__lfs_segwait50, __stub_libc_err);
 __strong_alias(__mq_timedreceive50, __stub_libc_err);
 __strong_alias(__mq_timedsend50, __stub_libc_err);
@@ -30,7 +29,7 @@ __strong_alias(__timer_gettime50, __stub_libc_err);
 __strong_alias(__timer_settime50, __stub_libc_err);
 __strong_alias(wait6, __stub_libc_err);
 #else
-#define error "__strong_alias is not defined"
+#error "__strong_alias is not defined"
 #endif
 
 void
